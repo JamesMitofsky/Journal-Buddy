@@ -30,8 +30,7 @@ export const MetadataForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const formattedTags = data.tags.split(",").map((tag) => tag.trim());
 
-    const metaData = `
----
+    const metaData = `---
 date: ${data.date}
 location_title: "${data.locationTitle}"
 location_3_words: "${data.locationWords}"
@@ -41,7 +40,7 @@ journal_number: ${data.journalNumber}
 schema_version: ${data.schemaVersion}
 ---
 `;
-    alert(metaData);
+    navigator.clipboard.writeText(metaData)
   };
 
   return (
@@ -140,7 +139,7 @@ schema_version: ${data.schemaVersion}
             </div>
 
             <Button type="submit" className="mt-4 w-full">
-              Generate Meta Data
+              Copy to clipboard!
             </Button>
           </form>
         </CardContent>
