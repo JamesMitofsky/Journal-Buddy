@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Label } from './ui/label';
