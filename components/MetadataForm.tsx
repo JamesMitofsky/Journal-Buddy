@@ -6,6 +6,7 @@ import { Label } from './ui/label';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { CardContent } from './ui/card';
+import { useToast } from "./ui/use-toast";
 
 type FormData = {
   date: string;
@@ -30,7 +31,18 @@ export const MetadataForm: React.FC = () => {
     }
   });
 
+  const { toast } = useToast()
+
   const onSubmit: SubmitHandler<FormData> = async ({ date, time, locationTitle, locationWords, pageNumber, journalNumber, schemaVersion, tags }) => {
+    const locationWordsPattern = /^[a-zA-Z]+\.[a-zA-Z]+\.[a-zA-Z]+$/;
+    if (locationWords && !locationWordsPattern.test(locationWords)) {
+        toast({
+            title: 'Invalid 3 Words Address',
+            description: 'This address must follow the pattern of three words, each separated by a period.',
+        });
+        throw new Error('Invalid Location Words pattern');
+    }
+
     const formattedTags = tags.split(",").map((tag) => tag.trim());
     const formattedDate = date.split('T')[0];
     const formattedTime = time ? time.replace(':',"h") : '';
@@ -38,8 +50,8 @@ export const MetadataForm: React.FC = () => {
 const metaData = `---
 Date: ${formattedDate}
 Time: ${formattedTime}
-Location: "${locationTitle}"
-3 Words Address: "${locationWords}"
+Location: ${locationTitle}
+3 Words Address: ${locationWords}
 Page: ${pageNumber}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
@@ -48,11 +60,17 @@ Schema Version: ${schemaVersion}
 `;
 
     try {
-      await navigator.clipboard.writeText(metaData);
-      console.log('Metadata copied to clipboard');
-    } catch (error) {
-      console.error('Failed to copy metadata to clipboard', error);
-    }
+          await navigator.clipboard.writeText(metaData);
+          toast({
+              title: 'Success',
+              description: 'Metadata copied to clipboard',
+          });
+        } catch (error) {
+          toast({
+              title: 'Error',
+              description: 'Failed to copy metadata to clipboard',
+          });
+        }
   };
 
   return (
@@ -104,7 +122,7 @@ Schema Version: ${schemaVersion}
             <Input
               type="text"
               id="locationWords"
-              {...register("locationWords", { required: true })}
+              {...register("locationWords")}
               className="w-full"
             />
             {errors.locationWords && <span className="text-red-500">This field is required</span>}
@@ -130,7 +148,7 @@ Schema Version: ${schemaVersion}
             <Input
               type="text"
               id="tags"
-              {...register("tags", { required: true })}
+              {...register("tags")}
               className="w-full"
             />
             {errors.tags && <span className="text-red-500">This field is required</span>}
