@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Label } from './ui/label';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Card, CardContent } from './ui/card';
+import { CardContent } from './ui/card';
 
 type FormData = {
   date: string;
@@ -23,7 +23,10 @@ export const MetadataForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({defaultValues: {
+    journalNumber: 1,
+    schemaVersion: 1,
+  }});
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const formattedTags = data.tags.split(",").map((tag) => tag.trim());
@@ -44,9 +47,7 @@ schema_version: ${data.schemaVersion}
   };
 
   return (
-    <div className="mx-auto my-8 max-w-lg p-4">
-      <h2 className="mb-4 text-2xl font-bold">Journal Metadata Form</h2>
-      <Card>
+    <>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
@@ -158,7 +159,6 @@ schema_version: ${data.schemaVersion}
             </Button>
           </form>
         </CardContent>
-      </Card>
-    </div>
+    </>
   );
 };
