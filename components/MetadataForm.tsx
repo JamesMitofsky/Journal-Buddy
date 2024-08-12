@@ -9,7 +9,6 @@ import { CardContent } from './ui/card';
 
 type FormData = {
   date: string;
-  title: string;
   locationTitle: string;
   locationWords: string;
   pageNumber: number;
@@ -34,7 +33,6 @@ export const MetadataForm: React.FC = () => {
     const metaData = `
 ---
 date: ${data.date}
-title: "${data.title}"
 location_title: "${data.locationTitle}"
 location_3_words: "${data.locationWords}"
 page_number: ${data.pageNumber}
@@ -61,19 +59,6 @@ schema_version: ${data.schemaVersion}
                 className="w-full"
               />
               {errors.date && <span className="text-red-500">This field is required</span>}
-            </div>
-
-            <div>
-              <Label htmlFor="title" className="mb-1 block">
-                Title:
-              </Label>
-              <Input
-                type="text"
-                id="title"
-                {...register("title", { required: true })}
-                className="w-full"
-              />
-              {errors.title && <span className="text-red-500">This field is required</span>}
             </div>
 
             <div>
