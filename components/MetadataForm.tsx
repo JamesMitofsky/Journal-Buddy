@@ -23,7 +23,7 @@ export const MetadataForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({defaultValues: {
-    journalNumber: 1,
+    journalNumber: 2,
     schemaVersion: 1,
   }});
 
