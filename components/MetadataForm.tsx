@@ -51,7 +51,7 @@ const metaData = `---
 Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${locationTitle}
-3 Words Address: ${locationWords}
+What3words: ${locationWords}
 Page: ${pageNumber}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
@@ -117,7 +117,7 @@ Schema Version: ${schemaVersion}
 
           <div>
             <Label htmlFor="locationWords" className="mb-1 block">
-              Location 3 Words:
+              What3words:
             </Label>
             <Input
               type="text"
