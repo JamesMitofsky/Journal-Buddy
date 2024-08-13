@@ -1,7 +1,8 @@
 
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { DefaultSettings } from "./defaultSettings"
+import { DefaultSettings } from "./DefaultSettings"
+
 
 export function SiteHeader() {
   return (

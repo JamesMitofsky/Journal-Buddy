@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { CardContent } from './ui/card';
 import { useToast } from "./ui/use-toast";
+import useLocalStorageState from "use-local-storage-state";
 
 type FormData = {
   date: string;
@@ -15,8 +16,6 @@ type FormData = {
   locationWords: string;
   pageNumber: number;
   tags: string;
-  journalNumber: number;
-  schemaVersion: number;
 };
 
 export const MetadataForm: React.FC = () => {
@@ -24,16 +23,11 @@ export const MetadataForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: {
-      journalNumber: 2,
-      schemaVersion: 1,
-    }
-  });
-
+  } = useForm<FormData>();
   const { toast } = useToast()
+  const [journalNumber] = useLocalStorageState<number>('journalNumber')
 
-  const onSubmit: SubmitHandler<FormData> = async ({ date, time, locationTitle, locationWords, pageNumber, journalNumber, schemaVersion, tags }) => {
+  const onSubmit: SubmitHandler<FormData> = async ({ date, time, locationTitle, locationWords, pageNumber, tags }) => {
     const locationWordsPattern = /^[a-zA-Z]+\.[a-zA-Z]+\.[a-zA-Z]+$/;
     if (locationWords && !locationWordsPattern.test(locationWords)) {
         toast({
@@ -55,7 +49,7 @@ What3words: ${locationWords}
 Page: ${pageNumber}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
-Schema Version: ${schemaVersion}
+Schema Version: 1
 ---
 `;
 
@@ -152,32 +146,6 @@ Schema Version: ${schemaVersion}
               className="w-full"
             />
             {errors.tags && <span className="text-red-500">This field is required</span>}
-          </div>
-
-          <div>
-            <Label htmlFor="journalNumber" className="mb-1 block">
-              Journal Number:
-            </Label>
-            <Input
-              type="number"
-              id="journalNumber"
-              {...register("journalNumber", { required: true, valueAsNumber: true })}
-              className="w-full"
-            />
-            {errors.journalNumber && <span className="text-red-500">This field is required</span>}
-          </div>
-
-          <div>
-            <Label htmlFor="schemaVersion" className="mb-1 block">
-              Schema Version:
-            </Label>
-            <Input
-              type="number"
-              id="schemaVersion"
-              {...register("schemaVersion", { required: true, valueAsNumber: true })}
-              className="w-full"
-            />
-            {errors.schemaVersion && <span className="text-red-500">This field is required</span>}
           </div>
 
           <Button type="submit" className="mt-4 w-full">
