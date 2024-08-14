@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Label } from "@radix-ui/react-label"
 import useLocalStorageState from "use-local-storage-state"
 
 import { useDialog } from "@/hooks/useDialog"
@@ -12,18 +12,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 
+import { LocationMap } from "./LocationMap"
 import { Button } from "./ui/button"
+import { Input } from "./ui/input"
 import { useToast } from "./ui/use-toast"
 
 export function DefaultSettingsDialog() {
@@ -37,8 +29,6 @@ export function DefaultSettingsDialog() {
   >("mapLocations", {
     defaultValue: { Work: "5678" },
   })
-  const [newLocation, setNewLocation] = useState<string>("")
-  const [newCode, setNewCode] = useState<string>("")
 
   const handleSetJournalNumber = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -48,21 +38,6 @@ export function DefaultSettingsDialog() {
       title: "Autosaved",
       description: "The new journal number has been autosaved.",
     })
-  }
-
-  const handleAddLocation = () => {
-    if (newLocation && newCode) {
-      setExistingMapLocations({
-        ...existingMapLocations,
-        [newLocation]: newCode,
-      })
-      setNewLocation("")
-      setNewCode("")
-      toast({
-        title: "Location Added",
-        description: "The new Google Plus Code has been added.",
-      })
-    }
   }
 
   return (
@@ -88,49 +63,12 @@ export function DefaultSettingsDialog() {
               className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-8 items-center gap-4">
-            <Label htmlFor="google-plus-code" className="col-span-2 text-right">
-              Add A Google Plus Code
-            </Label>
-            <Input
-              id="new-location"
-              value={newLocation}
-              onChange={(e) => setNewLocation(e.target.value)}
-              placeholder="Location"
-              type="text"
-              className="col-span-3"
-            />
-            <Input
-              id="new-code"
-              value={newCode}
-              onChange={(e) => setNewCode(e.target.value)}
-              placeholder="Plus Code"
-              type="text"
-              className="col-span-3"
-            />
-            <Button onClick={handleAddLocation} className="col-span-4">
-              Add Location
-            </Button>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <LocationMap />
           </div>
         </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Location Name</TableHead>
-              <TableHead>Google Plus Code</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {Object.keys(existingMapLocations).map((location) => (
-              <TableRow key={location}>
-                <TableCell>{location}</TableCell>
-                <TableCell>{existingMapLocations[location]}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
         <DialogFooter>
-          <Button type="submit" onClick={toggleIsDialogOpen}>
+          <Button type="button" onClick={toggleIsDialogOpen}>
             Close Dialog
           </Button>
         </DialogFooter>
