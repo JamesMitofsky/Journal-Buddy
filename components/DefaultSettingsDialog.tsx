@@ -63,9 +63,7 @@ export function DefaultSettingsDialog() {
               className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <LocationMap />
-          </div>
+          <LocationMap />
         </div>
         <DialogFooter>
           <Button type="button" onClick={toggleIsDialogOpen}>
