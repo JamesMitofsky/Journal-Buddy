@@ -4,11 +4,11 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { DialogProvider } from "@/hooks/useDialog"
+import { Toaster } from "@/components/ui/toaster"
+import { DefaultSettingsDialog } from "@/components/DefaultSettingsDialog"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
-import { DialogProvider } from "@/hooks/useDialog"
-import { DefaultSettingsDialog } from "@/components/DefaultSettingsDialog"
 
 export const metadata: Metadata = {
   title: {

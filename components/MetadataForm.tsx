@@ -1,47 +1,56 @@
-'use client'
+"use client"
 
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Label } from './ui/label';
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { CardContent } from './ui/card';
-import { useToast } from "./ui/use-toast";
-import useLocalStorageState from "use-local-storage-state";
+import React from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import useLocalStorageState from "use-local-storage-state"
+
+import { Button } from "./ui/button"
+import { CardContent } from "./ui/card"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import { useToast } from "./ui/use-toast"
 
 type FormData = {
-  date: string;
-  time?: string;
-  locationTitle: string;
-  locationWords: string;
-  pageNumber: number;
-  tags: string;
-};
+  date: string
+  time?: string
+  locationTitle: string
+  locationWords: string
+  pageNumber: number
+  tags: string
+}
 
 export const MetadataForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>()
   const { toast } = useToast()
-  const [journalNumber] = useLocalStorageState<number>('journalNumber')
+  const [journalNumber] = useLocalStorageState<number>("journalNumber")
 
-  const onSubmit: SubmitHandler<FormData> = async ({ date, time, locationTitle, locationWords, pageNumber, tags }) => {
-    const locationWordsPattern = /^[a-zA-Z]+\.[a-zA-Z]+\.[a-zA-Z]+$/;
+  const onSubmit: SubmitHandler<FormData> = async ({
+    date,
+    time,
+    locationTitle,
+    locationWords,
+    pageNumber,
+    tags,
+  }) => {
+    const locationWordsPattern = /^[a-zA-Z]+\.[a-zA-Z]+\.[a-zA-Z]+$/
     if (locationWords && !locationWordsPattern.test(locationWords)) {
-        toast({
-            title: 'Invalid 3 Words Address',
-            description: 'This address must follow the pattern of three words, each separated by a period.',
-        });
-        throw new Error('Invalid Location Words pattern');
+      toast({
+        title: "Invalid 3 Words Address",
+        description:
+          "This address must follow the pattern of three words, each separated by a period.",
+      })
+      throw new Error("Invalid Location Words pattern")
     }
 
-    const formattedTags = tags.split(",").map((tag) => tag.trim());
-    const formattedDate = date.split('T')[0];
-    const formattedTime = time ? time.replace(':',"h") : '';
+    const formattedTags = tags.split(",").map((tag) => tag.trim())
+    const formattedDate = date.split("T")[0]
+    const formattedTime = time ? time.replace(":", "h") : ""
 
-const metaData = `---
+    const metaData = `---
 Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${locationTitle}
@@ -51,21 +60,21 @@ Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
-`;
+`
 
     try {
-          await navigator.clipboard.writeText(metaData);
-          toast({
-              title: 'Success',
-              description: 'Metadata copied to clipboard',
-          });
-        } catch (error) {
-          toast({
-              title: 'Error',
-              description: 'Failed to copy metadata to clipboard',
-          });
-        }
-  };
+      await navigator.clipboard.writeText(metaData)
+      toast({
+        title: "Success",
+        description: "Metadata copied to clipboard",
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to copy metadata to clipboard",
+      })
+    }
+  }
 
   return (
     <>
@@ -81,7 +90,9 @@ Schema Version: 1
               {...register("date", { required: true })}
               className="w-full"
             />
-            {errors.date && <span className="text-red-500">This field is required</span>}
+            {errors.date && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
 
           <div>
@@ -106,7 +117,9 @@ Schema Version: 1
               {...register("locationTitle", { required: true })}
               className="w-full"
             />
-            {errors.locationTitle && <span className="text-red-500">This field is required</span>}
+            {errors.locationTitle && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
 
           <div>
@@ -119,7 +132,9 @@ Schema Version: 1
               {...register("locationWords")}
               className="w-full"
             />
-            {errors.locationWords && <span className="text-red-500">This field is required</span>}
+            {errors.locationWords && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
 
           <div>
@@ -129,10 +144,15 @@ Schema Version: 1
             <Input
               type="number"
               id="pageNumber"
-              {...register("pageNumber", { required: true, valueAsNumber: true })}
+              {...register("pageNumber", {
+                required: true,
+                valueAsNumber: true,
+              })}
               className="w-full"
             />
-            {errors.pageNumber && <span className="text-red-500">This field is required</span>}
+            {errors.pageNumber && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
 
           <div>
@@ -145,7 +165,9 @@ Schema Version: 1
               {...register("tags")}
               className="w-full"
             />
-            {errors.tags && <span className="text-red-500">This field is required</span>}
+            {errors.tags && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
 
           <Button type="submit" className="mt-4 w-full">
@@ -154,5 +176,5 @@ Schema Version: 1
         </form>
       </CardContent>
     </>
-  );
-};
+  )
+}

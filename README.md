@@ -33,4 +33,3 @@ Here are a few ideas for future updates:
 ## 🤗 Contributing
 
 If you have any suggestions or improvements, feel free to contribute! You can fork the repository, make your changes, and submit a pull request.
-
