@@ -46,7 +46,11 @@ export const MetadataForm: React.FC = () => {
       throw new Error("Invalid Location Words pattern")
     }
 
-    const formattedTags = tags.split(",").map((tag) => tag.trim())
+    const formattedTags = tags
+      .split(",") // split the string into array items
+      .map((tag) => tag.trim()) // remove white space before and after, since the original string has spaces after commas
+      .map((tag) => tag.replace(/ /g, "-")) // replace all instances of spaces between words in a tag, replace it with a dash
+
     const formattedDate = date.split("T")[0]
     const formattedTime = time ? time.replace(":", "h") : ""
 
