@@ -1,9 +1,10 @@
 "use client"
 
 import React from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
+import { Combobox } from "./ui/Combobox"
 import { Button } from "./ui/button"
 import { CardContent } from "./ui/card"
 import { Input } from "./ui/input"
@@ -22,11 +23,18 @@ type FormData = {
 export const MetadataForm: React.FC = () => {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
   const { toast } = useToast()
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
+  // const [existingMapLocations] = useLocalStorageState<LocationType[]>(
+  //   "mapLocations",
+  //   {
+  //     defaultValue: [{ plusAddress: "test value", label: "test label" }],
+  //   }
+  // )
 
   const onSubmit: SubmitHandler<FormData> = async ({
     date,
@@ -119,11 +127,12 @@ Schema Version: 1
             <Label htmlFor="plusCodeAddress" className="mb-1 block">
               +Code Address
             </Label>
-            <Input
-              type="text"
-              id="plusCodeAddress"
-              {...register("plusCodeAddress")}
-              className="w-full"
+            <Controller
+              name="plusCodeAddress"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Combobox onChange={onChange} value={value} />
+              )}
             />
           </div>
 

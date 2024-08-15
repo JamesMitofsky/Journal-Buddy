@@ -4,6 +4,7 @@ import { CircleX } from "lucide-react"
 import { useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
+import { LocationType } from "@/types/LocationType"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -27,88 +28,81 @@ export function LocationMap() {
   const { toast } = useToast()
 
   const [existingMapLocations, setExistingMapLocations] = useLocalStorageState<
-    Record<string, string>
+    LocationType[]
   >("mapLocations", {
-    defaultValue: { "2323423": "Work" },
+    defaultValue: [{ plusAddress: "2323423", label: "Work" }],
   })
 
   const { register, handleSubmit, reset } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
-    setExistingMapLocations((prev) => ({
+    setExistingMapLocations((prev) => [
       ...prev,
-      [data.newCode]: data.newLocation,
-    }))
+      { plusAddress: data.newCode, label: data.newLocation },
+    ])
     reset()
   }
 
-  const handleDeleteLocation = ({
-    address,
-    label,
-  }: {
-    address: string
-    label: string
-  }) => {
-    setExistingMapLocations((prev) => {
-      const { [address]: _, ...rest } = prev
-      return rest
-    })
+  const handleDeleteLocation = (address: string) => {
+    setExistingMapLocations((prev) =>
+      prev.filter((location) => location.plusAddress !== address)
+    )
     toast({
-      title: `Location "${label}" Deleted`,
+      title: `LocationType Deleted`,
       description: `The Google Plus Code "${address}" has been deleted.`,
     })
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-8 items-center gap-4">
-          <Label htmlFor="new-location" className="col-span-2 text-right">
-            Add A Google Plus Code
-          </Label>
-          <Input
-            id="new-location"
-            {...register("newLocation", { required: true })}
-            placeholder="Location"
-            type="text"
-            className="col-span-3"
-          />
-          <Input
-            id="new-code"
-            {...register("newCode", { required: true })}
-            placeholder="Code"
-            type="text"
-            className="col-span-3"
-          />
-          <Button type="submit" className="col-span-4">
-            Add Location
-          </Button>
-        </div>
+      <form
+        className="grid grid-cols-8 items-center gap-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Label className="col-span-2 text-right">Google+ Code</Label>
+        <Input
+          id="label"
+          {...register("newLocation", { required: true })}
+          placeholder="Label"
+          type="text"
+          className="col-span-3"
+        />
+        <Input
+          {...register("newCode", { required: true })}
+          placeholder="Code"
+          type="text"
+          className="col-span-3"
+        />
+        <Button type="submit" className="col-span-8">
+          Add LocationType
+        </Button>
       </form>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Location Name</TableHead>
-            <TableHead>Google Plus Code</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.entries(existingMapLocations).map(([address, label]) => (
-            <TableRow key={address}>
-              <TableCell>{label}</TableCell>
-              <TableCell>{address}</TableCell>
-              <TableCell>
-                <Button
-                  color="error"
-                  onClick={() => handleDeleteLocation({ address, label })}
-                >
-                  <CircleX className="h-6 w-[1.3rem]" />
-                </Button>
-              </TableCell>
+      <div className="items-center gap-4">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Label</TableHead>
+              <TableHead>Code</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {existingMapLocations.map(({ plusAddress, label }) => (
+              <TableRow key={plusAddress}>
+                <TableCell>{label}</TableCell>
+                <TableCell>{plusAddress}</TableCell>
+                <TableCell>
+                  <Button
+                    color="error"
+                    onClick={() => handleDeleteLocation(plusAddress)}
+                  >
+                    <CircleX className="h-6 w-[1.3rem]" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </>
   )
 }
