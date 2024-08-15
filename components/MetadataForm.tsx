@@ -13,10 +13,10 @@ import { useToast } from "./ui/use-toast"
 type FormData = {
   date: string
   time?: string
-  locationTitle: string
-  locationWords: string
+  locationTitle?: string
+  plusCodeAddress?: string
   pageNumber: number
-  tags: string
+  tags?: string
 }
 
 export const MetadataForm: React.FC = () => {
@@ -32,24 +32,16 @@ export const MetadataForm: React.FC = () => {
     date,
     time,
     locationTitle,
-    locationWords,
+    plusCodeAddress,
     pageNumber,
     tags,
   }) => {
-    const locationWordsPattern = /^[a-zA-Z]+\.[a-zA-Z]+\.[a-zA-Z]+$/
-    if (locationWords && !locationWordsPattern.test(locationWords)) {
-      toast({
-        title: "Invalid 3 Words Address",
-        description:
-          "This address must follow the pattern of three words, each separated by a period.",
-      })
-      throw new Error("Invalid Location Words pattern")
-    }
-
     const formattedTags = tags
-      .split(",") // split the string into array items
-      .map((tag) => tag.trim()) // remove white space before and after, since the original string has spaces after commas
-      .map((tag) => tag.replace(/ /g, "-")) // replace all instances of spaces between words in a tag, replace it with a dash
+      ? tags
+          .split(",") // split the string into array items
+          .map((tag) => tag.trim()) // remove white space before and after, since the original string has spaces after commas
+          .map((tag) => tag.replace(/ /g, "-")) // replace all instances of spaces between words in a tag, replace it with a dash
+      : undefined
 
     const formattedDate = date.split("T")[0]
     const formattedTime = time ? time.replace(":", "h") : ""
@@ -58,7 +50,7 @@ export const MetadataForm: React.FC = () => {
 Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${locationTitle}
-What3words: ${locationWords}
+Plus Code Address: ${plusCodeAddress}
 Page: ${pageNumber}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
@@ -86,7 +78,7 @@ Schema Version: 1
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Label htmlFor="date" className="mb-1 block">
-              Date:
+              Date*
             </Label>
             <Input
               type="date"
@@ -101,7 +93,7 @@ Schema Version: 1
 
           <div>
             <Label htmlFor="time" className="mb-1 block">
-              Time (optional):
+              Time
             </Label>
             <Input
               type="time"
@@ -113,32 +105,26 @@ Schema Version: 1
 
           <div>
             <Label htmlFor="locationTitle" className="mb-1 block">
-              Location Title:
+              Location Title*
             </Label>
             <Input
               type="text"
               id="locationTitle"
-              {...register("locationTitle", { required: true })}
+              {...register("locationTitle")}
               className="w-full"
             />
-            {errors.locationTitle && (
-              <span className="text-red-500">This field is required</span>
-            )}
           </div>
 
           <div>
-            <Label htmlFor="locationWords" className="mb-1 block">
-              What3words:
+            <Label htmlFor="plusCodeAddress" className="mb-1 block">
+              +Code Address
             </Label>
             <Input
               type="text"
-              id="locationWords"
-              {...register("locationWords")}
+              id="plusCodeAddress"
+              {...register("plusCodeAddress")}
               className="w-full"
             />
-            {errors.locationWords && (
-              <span className="text-red-500">This field is required</span>
-            )}
           </div>
 
           <div>
@@ -161,7 +147,7 @@ Schema Version: 1
 
           <div>
             <Label htmlFor="tags" className="mb-1 block">
-              Tags (comma separated):
+              Tags (comma separated)*
             </Label>
             <Input
               type="text"
