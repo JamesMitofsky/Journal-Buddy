@@ -4,6 +4,8 @@ import React from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
+import { LocationType } from "@/types/LocationType"
+
 import { Combobox } from "./ui/Combobox"
 import { Button } from "./ui/button"
 import { CardContent } from "./ui/card"
@@ -14,8 +16,7 @@ import { useToast } from "./ui/use-toast"
 type FormData = {
   date: string
   time?: string
-  locationTitle?: string
-  plusCodeAddress?: string
+  location?: LocationType
   pageNumber: number
   tags?: string
 }
@@ -29,18 +30,11 @@ export const MetadataForm: React.FC = () => {
   } = useForm<FormData>()
   const { toast } = useToast()
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
-  // const [existingMapLocations] = useLocalStorageState<LocationType[]>(
-  //   "mapLocations",
-  //   {
-  //     defaultValue: [{ plusAddress: "test value", label: "test label" }],
-  //   }
-  // )
 
   const onSubmit: SubmitHandler<FormData> = async ({
     date,
     time,
-    locationTitle,
-    plusCodeAddress,
+    location,
     pageNumber,
     tags,
   }) => {
@@ -57,8 +51,8 @@ export const MetadataForm: React.FC = () => {
     const metaData = `---
 Date: ${formattedDate}
 Time: ${formattedTime}
-Location: ${locationTitle}
-Plus Code Address: ${plusCodeAddress}
+Location: ${location?.label}
+Plus Code Address: ${location?.plusCode}
 Page: ${pageNumber}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
@@ -112,23 +106,11 @@ Schema Version: 1
           </div>
 
           <div>
-            <Label htmlFor="locationTitle" className="mb-1 block">
-              Location Title*
-            </Label>
-            <Input
-              type="text"
-              id="locationTitle"
-              {...register("locationTitle")}
-              className="w-full"
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="plusCodeAddress" className="mb-1 block">
+            <Label htmlFor="location" className="mb-1 block">
               +Code Address
             </Label>
             <Controller
-              name="plusCodeAddress"
+              name="location"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Combobox onChange={onChange} value={value} />

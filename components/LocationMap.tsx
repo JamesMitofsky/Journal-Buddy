@@ -30,7 +30,7 @@ export function LocationMap() {
   const [existingMapLocations, setExistingMapLocations] = useLocalStorageState<
     LocationType[]
   >("mapLocations", {
-    defaultValue: [{ plusAddress: "2323423", label: "Work" }],
+    defaultValue: [{ plusCode: "2323423", label: "Work" }],
   })
 
   const { register, handleSubmit, reset } = useForm<FormValues>()
@@ -38,14 +38,14 @@ export function LocationMap() {
   const onSubmit = (data: FormValues) => {
     setExistingMapLocations((prev) => [
       ...prev,
-      { plusAddress: data.newCode, label: data.newLocation },
+      { plusCode: data.newCode, label: data.newLocation },
     ])
     reset()
   }
 
   const handleDeleteLocation = (address: string) => {
     setExistingMapLocations((prev) =>
-      prev.filter((location) => location.plusAddress !== address)
+      prev.filter((location) => location.plusCode !== address)
     )
     toast({
       title: `LocationType Deleted`,
@@ -86,14 +86,14 @@ export function LocationMap() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {existingMapLocations.map(({ plusAddress, label }) => (
-              <TableRow key={plusAddress}>
+            {existingMapLocations.map(({ plusCode, label }) => (
+              <TableRow key={plusCode}>
                 <TableCell>{label}</TableCell>
-                <TableCell>{plusAddress}</TableCell>
+                <TableCell>{plusCode}</TableCell>
                 <TableCell>
                   <Button
                     color="error"
-                    onClick={() => handleDeleteLocation(plusAddress)}
+                    onClick={() => handleDeleteLocation(plusCode)}
                   >
                     <CircleX className="h-6 w-[1.3rem]" />
                   </Button>

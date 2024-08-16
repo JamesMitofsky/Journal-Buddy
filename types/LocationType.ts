@@ -1,4 +1,4 @@
 export type LocationType = {
-  plusAddress: string
+  plusCode: string
   label: string
 }

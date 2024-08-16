@@ -28,7 +28,7 @@ export function Combobox() {
   const [existingMapLocations] = useLocalStorageState<LocationType[]>(
     "mapLocations",
     {
-      defaultValue: [{ plusAddress: "test value", label: "test label" }],
+      defaultValue: [{ plusCode: "test value", label: "test label" }],
     }
   )
 
@@ -56,7 +56,7 @@ export function Combobox() {
             <CommandGroup>
               {existingMapLocations.map((address) => (
                 <CommandItem
-                  key={address.plusAddress}
+                  key={address.plusCode}
                   value={address.label}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
