@@ -25,11 +25,6 @@ export function DefaultSettingsDialog() {
 
   const [journalNumber, setJournalNumber] =
     useLocalStorageState<number>("journalNumber")
-  const [existingMapLocations, setExistingMapLocations] = useLocalStorageState<
-    Record<string, string>
-  >("mapLocations", {
-    defaultValue: { Work: "5678" },
-  })
 
   const handleSetJournalNumber = (
     event: React.ChangeEvent<HTMLInputElement>
