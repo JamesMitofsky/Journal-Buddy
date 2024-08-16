@@ -4,11 +4,11 @@ This app streamlines the process of digitizing the metadata associated with my j
 
 ## 📚 Why I Built This App
 
-As someone who loves the kinesthetics of writing by hand, I've spilled a lot of ink writing in my journal. On the other hand, as someone who loves data, I know the end destination for my rambly journal entries must be a database. The first step down that road is transcription.
+As someone who loves the kinesthetics of writing by hand, I've spilled a lot of ink writing in my journal. On the other hand, as someone who loves data, I know the my rambly thoughts need to become searchable. The first step down this road is transcription.
 
-I knew I wanted to depend on markdown (and I've been using [Obsidian](https://obsidian.md/)), but reliably typing out the metadata of each entry is a tedious ritual. That frustration compromises data fidelity and discourages me from regularly transcribing entries.
+I've been using [Obsidian](https://obsidian.md/) for a while, but reliably typing out the metadata of each entry is a tedious ritual, and that frustration compromises data fidelity and discourages regularly contributing to the transcription.
 
-That's where the Journal Metadata Formatter comes in! By automating the formatting process, this app reduces the fuss and ensures I can focus on what truly matters: capturing my thoughts and reflections.
+That's where the Journal Metadata Formatter comes in! By automating the formatting process, it reduces the fuss to focus on what truly matters: capturing thoughts and reflections.
 
 ## 🛠️ How It Works
 
@@ -30,6 +30,6 @@ Here are a few ideas for future updates:
 - **Auto-suggest existing tags:** Past entries could be read to create a list of existing tags that can be recommended.
 - **Address verification:** Verify that the given What3words address definitely exists, avoiding possible typos.
 
-## 🤗 Contributing
+## 🤝 Contributing
 
-If you have any suggestions or improvements, feel free to contribute! You can fork the repository, make your changes, and submit a pull request.
+If you have suggestions or improvements, feel free to contribute! You can fork the repository, make your changes, and submit a pull request.
