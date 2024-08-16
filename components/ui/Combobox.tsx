@@ -81,6 +81,11 @@ export function Combobox({ selectedItem, onChange }: ComboboxProps) {
                     )}
                   />
                   {address.label}
+                  {address.plusCode && (
+                    <span className="text-slate-400">
+                      &nbsp;— {address.plusCode}
+                    </span>
+                  )}
                 </CommandItem>
               ))}
             </CommandGroup>

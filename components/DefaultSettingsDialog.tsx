@@ -1,6 +1,5 @@
 "use client"
 
-import { Label } from "@radix-ui/react-label"
 import useLocalStorageState from "use-local-storage-state"
 
 import { useDialog } from "@/hooks/useDialog"
@@ -12,6 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
 
 import { LocationMap } from "./LocationMap"
 import { Button } from "./ui/button"
@@ -64,6 +65,7 @@ export function DefaultSettingsDialog() {
               className="col-span-3"
             />
           </div>
+          <Separator className="my-4" />
           <LocationMap />
         </div>
         <DialogFooter>

@@ -43,13 +43,13 @@ export function LocationMap() {
     reset()
   }
 
-  const handleDeleteLocation = (address: string) => {
+  const handleDeleteLocation = (location: LocationType) => {
     setExistingMapLocations((prev) =>
-      prev.filter((location) => location.plusCode !== address)
+      prev.filter((location) => location.plusCode !== location.plusCode)
     )
     toast({
-      title: `LocationType Deleted`,
-      description: `The Google Plus Code "${address}" has been deleted.`,
+      title: `Location Deleted`,
+      description: `The location "${location.label}" has been deleted.`,
       variant: "success",
     })
   }
@@ -60,7 +60,7 @@ export function LocationMap() {
         className="grid grid-cols-8 items-center gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Label className="col-span-2 text-right">Google+ Code</Label>
+        <Label className="col-span-2 text-right">Location</Label>
         <Input
           id="label"
           {...register("newLocation", { required: true })}
@@ -69,13 +69,13 @@ export function LocationMap() {
           className="col-span-3"
         />
         <Input
-          {...register("newCode", { required: true })}
-          placeholder="Code"
+          {...register("newCode")}
+          placeholder="+ Code"
           type="text"
           className="col-span-3"
         />
         <Button type="submit" className="col-span-8">
-          Add LocationType
+          Add Location
         </Button>
       </form>
       <div className="items-center gap-4">
@@ -83,7 +83,7 @@ export function LocationMap() {
           <TableHeader>
             <TableRow>
               <TableHead>Label</TableHead>
-              <TableHead>Code</TableHead>
+              <TableHead>+ Code</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -93,8 +93,7 @@ export function LocationMap() {
                 <TableCell>{plusCode}</TableCell>
                 <TableCell>
                   <Button
-                    color="error"
-                    onClick={() => handleDeleteLocation(plusCode)}
+                    onClick={() => handleDeleteLocation({ plusCode, label })}
                   >
                     <CircleX className="h-6 w-[1.3rem]" />
                   </Button>
