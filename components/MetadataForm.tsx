@@ -113,7 +113,7 @@ Schema Version: 1
               name="location"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <Combobox onChange={onChange} value={value} />
+                <Combobox onChange={onChange} selectedItem={value} />
               )}
             />
           </div>

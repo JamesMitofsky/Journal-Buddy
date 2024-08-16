@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import useLocalStorageState from "use-local-storage-state"
 
@@ -21,9 +21,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function Combobox() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+type ComboboxProps = {
+  selectedItem: LocationType | undefined
+  onChange: (value: LocationType | undefined) => void
+}
+
+export function Combobox({ selectedItem, onChange }: ComboboxProps) {
+  const [open, setOpen] = useState(false)
 
   const [existingMapLocations] = useLocalStorageState<LocationType[]>(
     "mapLocations",
@@ -41,9 +45,10 @@ export function Combobox() {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? existingMapLocations.find((address) => address.label === value)
-                ?.label
+          {selectedItem
+            ? existingMapLocations.find(
+                (address) => address.label === selectedItem.label
+              )?.label
             : "Select location..."}
           <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
         </Button>
@@ -58,15 +63,21 @@ export function Combobox() {
                 <CommandItem
                   key={address.plusCode}
                   value={address.label}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
+                  onSelect={() => {
+                    onChange(
+                      address.label === selectedItem?.label
+                        ? undefined
+                        : address
+                    )
                     setOpen(false)
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 size-4",
-                      value === address.label ? "opacity-100" : "opacity-0"
+                      selectedItem?.label === address.label
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                   {address.label}
