@@ -33,7 +33,12 @@ export function LocationMap() {
     defaultValue: [{ plusCode: "2323423", label: "Work" }],
   })
 
-  const { register, handleSubmit, reset } = useForm<FormValues>()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
     setExistingMapLocations((prev) => [
@@ -66,7 +71,7 @@ export function LocationMap() {
         <Input
           id="label"
           {...register("newLocation", { required: true })}
-          placeholder="Label"
+          placeholder="Label*"
           type="text"
           className="col-span-3"
         />
@@ -76,7 +81,12 @@ export function LocationMap() {
           type="text"
           className="col-span-3"
         />
-        <Button type="submit" className="col-span-8">
+        {errors.newLocation && (
+          <span className="col-span-3 col-start-3 text-red-500">
+            This field is required
+          </span>
+        )}
+        <Button type="submit" className="col-span-6 col-start-3">
           Add Location
         </Button>
       </form>

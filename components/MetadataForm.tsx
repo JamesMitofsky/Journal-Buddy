@@ -118,7 +118,7 @@ Schema Version: 1
 
           <div>
             <Label htmlFor="location" className="mb-1 block">
-              +Code Address
+              Location
             </Label>
             <Controller
               name="location"
