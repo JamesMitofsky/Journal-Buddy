@@ -43,13 +43,15 @@ export function LocationMap() {
     reset()
   }
 
-  const handleDeleteLocation = (location: LocationType) => {
+  const handleDeleteLocation = (locationToDelete: LocationType) => {
     setExistingMapLocations((prev) =>
-      prev.filter((location) => location.plusCode !== location.plusCode)
+      prev.filter(
+        (prevLocation) => prevLocation.label !== locationToDelete.label
+      )
     )
     toast({
       title: `Location Deleted`,
-      description: `The location "${location.label}" has been deleted.`,
+      description: `The location "${locationToDelete.label}" has been deleted.`,
       variant: "success",
     })
   }
