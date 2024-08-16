@@ -1,6 +1,7 @@
 "use client"
 
-import { CircleX } from "lucide-react"
+import Link from "next/link"
+import { CircleX, ExternalLink, Link as LinkIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
@@ -95,14 +96,34 @@ export function LocationMap() {
           <TableHeader>
             <TableRow>
               <TableHead>Label</TableHead>
-              <TableHead>+ Code</TableHead>
+              <TableHead className="flex items-center justify-center">
+                + Code
+                <Link
+                  className="ml-3"
+                  target="_blank"
+                  href="https://plus.codes/map"
+                >
+                  <ExternalLink size="1rem" />
+                </Link>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {existingMapLocations.map(({ plusCode, label }) => (
               <TableRow key={plusCode}>
                 <TableCell>{label}</TableCell>
-                <TableCell>{plusCode}</TableCell>
+                <TableCell>
+                  {plusCode && (
+                    <Link
+                      className="flex items-center justify-center"
+                      target="_blank"
+                      href={`https://plus.codes/${plusCode}`}
+                    >
+                      <LinkIcon size="1rem" className="mr-1" />
+                      {plusCode}
+                    </Link>
+                  )}
+                </TableCell>
                 <TableCell>
                   <Button
                     onClick={() => handleDeleteLocation({ plusCode, label })}
