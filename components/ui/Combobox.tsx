@@ -42,9 +42,8 @@ export function Combobox() {
           className="w-[200px] justify-between"
         >
           {value
-            ? existingMapLocations.find(
-                (address) => address.plusAddress === value
-              )?.label
+            ? existingMapLocations.find((address) => address.label === value)
+                ?.label
             : "Select location..."}
           <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
         </Button>
@@ -58,7 +57,7 @@ export function Combobox() {
               {existingMapLocations.map((address) => (
                 <CommandItem
                   key={address.plusAddress}
-                  value={address.plusAddress}
+                  value={address.label}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
@@ -67,9 +66,7 @@ export function Combobox() {
                   <Check
                     className={cn(
                       "mr-2 size-4",
-                      value === address.plusAddress
-                        ? "opacity-100"
-                        : "opacity-0"
+                      value === address.label ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {address.label}
