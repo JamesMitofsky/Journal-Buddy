@@ -38,6 +38,15 @@ export const MetadataForm: React.FC = () => {
     pageNumber,
     tags,
   }) => {
+    if (!journalNumber) {
+      toast({
+        title: "Error",
+        description:
+          "Open the settings and indicate which journal number you are using.",
+        variant: "error",
+      })
+      throw new Error("Journal number not set")
+    }
     const formattedTags = tags
       ? tags
           .split(",") // split the string into array items
@@ -65,11 +74,13 @@ Schema Version: 1
       toast({
         title: "Success",
         description: "Metadata copied to clipboard",
+        variant: "success",
       })
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to copy metadata to clipboard",
+        variant: "error",
       })
     }
   }

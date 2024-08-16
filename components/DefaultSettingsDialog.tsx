@@ -37,6 +37,7 @@ export function DefaultSettingsDialog() {
     toast({
       title: "Autosaved",
       description: "The new journal number has been autosaved.",
+      variant: "success",
     })
   }
 

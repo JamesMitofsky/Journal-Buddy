@@ -50,6 +50,7 @@ export function LocationMap() {
     toast({
       title: `LocationType Deleted`,
       description: `The Google Plus Code "${address}" has been deleted.`,
+      variant: "success",
     })
   }
 
