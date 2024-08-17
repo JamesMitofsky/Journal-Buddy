@@ -27,10 +27,14 @@ That's where the Journal Metadata Formatter comes in! By automating the formatti
 
 Here are a few ideas for future updates:
 
-- **Auto-suggest existing tags:** Past entries on the computer could be read to create a list of existing tags that can be recommended.
-- **Auto-suggest existing locations:** Rather than using local storage for past locations, past entries on the computer could be read to create a list of existing tags that can be recommended.
-- **Address verification:** Provide a visual verification for the given Plus Code address, making sure it's not in some wildly wrong place.
-- **Automate file creation:** Rather than copying the metadata to a file, automate the file creation in a given directory on the user's computer.
+- [ ] **Auto-suggest existing tags:** Past entries on the computer could be read to create a list of existing tags that can be recommended.
+- [ ] **Auto-suggest existing locations:** Rather than using local storage for past locations, past entries on the computer could be read to create a list of existing tags that can be recommended.
+- [ ] **Address verification:** Provide a visual verification for the given Plus Code address, making sure it's not in some wildly wrong place.
+- [x] **Automate file creation:** Rather than copying the metadata to a file, automate the file creation in a given directory on the user's computer.
+- [ ] **Have popups link to the full entry:** Include a link in the little pop up from the map which leads to some sort of slide up dialog that shows the entry and its basic info (think ShadCN UI).
+- [ ] **Printable map:** Have pretty version of this map.
+- [ ] **Clustering locations:** Include clusters, according to the leaflet specifications.
+- [ ] **Animate the map to show entries over time:**
 
 ## 🤝 Contributing
 
