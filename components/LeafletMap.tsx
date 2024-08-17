@@ -11,8 +11,8 @@ export default function LeafletMap({ geoData }: LeafletMapProps) {
   return (
     <MapContainer
       className="size-full"
-      center={geoData ? geoData[0] : [0, 0]}
-      zoom={13}
+      center={[9.046036, -17.871187]}
+      zoom={1.2}
       scrollWheelZoom={true}
     >
       <TileLayer

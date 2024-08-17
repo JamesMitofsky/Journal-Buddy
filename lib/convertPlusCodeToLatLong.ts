@@ -1,16 +1,14 @@
-// Import the decode function from the open-location-code package
-// import { decode } from "open-location-code"
-const { decode } = require("pluscodes")
+const OpenLocationCode = require("open-location-code").OpenLocationCode
+const openLocationCode = new OpenLocationCode()
 
 export type LatLongFormat = {
   lat: number
   lng: number
 }
 
-// Function to convert Plus Code to latitude and longitude
 export function convertPlusCodeToLatLong(plusCode: string): LatLongFormat {
-  console.log(plusCode)
-  const decoded = decode(plusCode)
+  const decoded = openLocationCode.decode("6GCRPR6C+24")
+
   return {
     lat: decoded.latitudeCenter,
     lng: decoded.longitudeCenter,
