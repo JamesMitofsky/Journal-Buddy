@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useToast } from "@/components/ui/use-toast"
+import MapOfEntries from "@/components/MapOfEntries"
 
 export default function FolderPicker() {
   const [journalEntries, setJournalEntries] = useState<MetadataType[]>([])
@@ -54,6 +55,7 @@ export default function FolderPicker() {
     <div className="flex h-full flex-col items-center justify-center space-y-8 p-4">
       <div className="w-full max-w-4xl">
         <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
+        <MapOfEntries entries={journalEntries} />
         <Table className="w-full border-collapse">
           <TableHeader className="bg-gray-100">
             <TableRow>
