@@ -1,4 +1,3 @@
-import React from "react"
 import { MapContainer, Marker, TileLayer } from "react-leaflet"
 
 import "react-leaflet-marker"
@@ -6,21 +5,6 @@ import { LatLongFormat } from "@/lib/convertPlusCodeToLatLong"
 
 type LeafletMapProps = {
   geoData?: LatLongFormat[]
-}
-
-const fakeData: LatLongFormat[] = [
-  { lat: 37.7749, lng: -122.4194 },
-  { lat: 37.7749, lng: -122.4194 },
-]
-
-function LocationMarkers({ markers }: { markers?: LatLongFormat[] }) {
-  return (
-    <React.Fragment>
-      {markers?.map((marker) => (
-        <Marker position={marker} />
-      ))}
-    </React.Fragment>
-  )
 }
 
 export default function LeafletMap({ geoData }: LeafletMapProps) {
@@ -35,14 +19,9 @@ export default function LeafletMap({ geoData }: LeafletMapProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {/* {fakeData?.map((pos) => (
-        <MarkerLayer>
-          <Marker position={pos}>
-            <MapPin />
-          </Marker>
-        </MarkerLayer>
-      ))} */}
-      <LocationMarkers markers={geoData} />
+      {geoData?.map((pos) => (
+        <Marker position={pos} />
+      ))}
     </MapContainer>
   )
 }
