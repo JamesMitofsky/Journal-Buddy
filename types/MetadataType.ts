@@ -12,3 +12,10 @@ export type MetadataType = {
   }
   content: string
 }
+
+export type MetadataReadyForMapType = MetadataType & {
+  latLongAddress?: {
+    lat: number
+    lng: number
+  }
+}

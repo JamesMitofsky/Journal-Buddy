@@ -3,10 +3,10 @@
 import { useMemo } from "react"
 import dynamic from "next/dynamic"
 
-import { MetadataType } from "@/types/MetadataType"
-import { convertPlusCodeToLatLong } from "@/lib/convertPlusCodeToLatLong"
+import { MetadataReadyForMapType, MetadataType } from "@/types/MetadataType"
 
 import "leaflet/dist/leaflet.css"
+import { convertPlusCodeToLatLong } from "@/lib/convertPlusCodeToLatLong"
 
 const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false })
 
@@ -15,23 +15,32 @@ type MapOfEntriesProps = {
 }
 
 export default function MapOfEntries({ entries }: MapOfEntriesProps) {
-  const formattedLocations = useMemo(() => {
-    const convertedLocations = entries?.flatMap((entry) =>
-      entry.metadata.plusCodeAddress
-        ? convertPlusCodeToLatLong(entry.metadata.plusCodeAddress)
-        : []
+  const metadataWithFormattedAddress: MetadataReadyForMapType[] | undefined =
+    useMemo(
+      () =>
+        entries?.map((entry) => {
+          const formattedAddress = entry.metadata.plusCodeAddress
+            ? convertPlusCodeToLatLong(entry.metadata.plusCodeAddress)
+            : undefined
+
+          const preparedEntry: MetadataReadyForMapType = {
+            ...entry,
+            metadata: {
+              ...entry.metadata,
+            },
+            latLongAddress: formattedAddress,
+          }
+
+          return preparedEntry
+        }),
+      [entries]
     )
 
-    const locationsWithoutUndefined = convertedLocations?.filter(
-      (location) => location !== undefined
-    )
-
-    return locationsWithoutUndefined
-  }, [entries])
+  console.log(metadataWithFormattedAddress)
 
   return (
     <div className="h-96 w-full">
-      <LeafletMap geoData={formattedLocations} />
+      <LeafletMap journalEntries={metadataWithFormattedAddress} />
     </div>
   )
 }
