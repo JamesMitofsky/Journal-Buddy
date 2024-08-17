@@ -6,7 +6,7 @@ export type MetadataType = {
     location: string
     plusCodeAddress: string
     page: number
-    tags: string[]
+    tags?: string[]
     journalNumber: number
     schemaVersion: number
   }
