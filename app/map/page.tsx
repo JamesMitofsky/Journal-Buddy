@@ -61,6 +61,7 @@ export default function FolderPicker() {
             <TableRow>
               <TableHead className="p-4 text-left">Name</TableHead>
               <TableHead className="p-4 text-left">Date</TableHead>
+              <TableHead className="p-4 text-left">Tags</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
