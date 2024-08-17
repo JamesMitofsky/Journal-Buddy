@@ -1,8 +1,7 @@
 import React from "react"
-import { MapPin } from "lucide-react"
-import { MapContainer, TileLayer } from "react-leaflet"
-import { Marker, MarkerLayer } from "react-leaflet-marker"
+import { MapContainer, Marker, TileLayer } from "react-leaflet"
 
+import "react-leaflet-marker"
 import { LatLongFormat } from "@/lib/convertPlusCodeToLatLong"
 
 type LeafletMapProps = {
@@ -18,11 +17,7 @@ function LocationMarkers({ markers }: { markers?: LatLongFormat[] }) {
   return (
     <React.Fragment>
       {markers?.map((marker) => (
-        <MarkerLayer>
-          <Marker position={marker}>
-            <MapPin />
-          </Marker>
-        </MarkerLayer>
+        <Marker position={marker} />
       ))}
     </React.Fragment>
   )
