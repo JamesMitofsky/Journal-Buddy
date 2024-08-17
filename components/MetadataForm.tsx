@@ -1,10 +1,12 @@
 "use client"
 
 import React from "react"
+import { saveAs } from "file-saver"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
 import { LocationType } from "@/types/LocationType"
+import { MetadataType } from "@/types/MetadataType"
 
 import { Combobox } from "./ui/Combobox"
 import { Button } from "./ui/button"
@@ -13,11 +15,9 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useToast } from "./ui/use-toast"
 
-type FormData = {
-  date: string
-  time?: string
+type FormData = Pick<MetadataType["metadata"], "date" | "time" | "page"> & {
+  title: string
   location?: LocationType
-  pageNumber: number
   tags?: string
 }
 
@@ -32,10 +32,11 @@ export const MetadataForm: React.FC = () => {
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
 
   const onSubmit: SubmitHandler<FormData> = async ({
+    title,
     date,
     time,
     location,
-    pageNumber,
+    page,
     tags,
   }) => {
     if (!journalNumber) {
@@ -62,7 +63,7 @@ Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${location?.label}
 Plus Code Address: ${location?.plusCode}
-Page: ${pageNumber}
+Page: ${page}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
 Schema Version: 1
@@ -70,16 +71,17 @@ Schema Version: 1
 `
 
     try {
-      await navigator.clipboard.writeText(metaData)
+      const blob = new Blob([metaData], { type: "text/markdown;charset=utf-8" })
+      saveAs(blob, `${title}.md`)
       toast({
         title: "Success",
-        description: "Metadata copied to clipboard",
+        description: "Metadata saved to file",
         variant: "success",
       })
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to copy metadata to clipboard",
+        description: "Failed to save metadata to file",
         variant: "error",
       })
     }
@@ -89,6 +91,21 @@ Schema Version: 1
     <>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <Label htmlFor="title" className="mb-1 block">
+              Title*
+            </Label>
+            <Input
+              type="text"
+              id="title"
+              {...register("title", { required: true })}
+              className="w-full"
+            />
+            {errors.title && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+
           <div>
             <Label htmlFor="date" className="mb-1 block">
               Date*
@@ -136,13 +153,13 @@ Schema Version: 1
             <Input
               type="number"
               id="pageNumber"
-              {...register("pageNumber", {
+              {...register("page", {
                 required: true,
                 valueAsNumber: true,
               })}
               className="w-full"
             />
-            {errors.pageNumber && (
+            {errors.page && (
               <span className="text-red-500">This field is required</span>
             )}
           </div>
@@ -163,7 +180,7 @@ Schema Version: 1
           </div>
 
           <Button type="submit" className="mt-4 w-full">
-            Copy to clipboard!
+            Save to file!
           </Button>
         </form>
       </CardContent>

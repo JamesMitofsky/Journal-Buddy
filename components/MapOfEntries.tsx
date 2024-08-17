@@ -16,9 +16,17 @@ type MapOfEntriesProps = {
 
 export default function MapOfEntries({ entries }: MapOfEntriesProps) {
   const formattedLocations = useMemo(() => {
-    return entries?.map((entry) =>
-      convertPlusCodeToLatLong(entry.metadata.plusCodeAddress)
+    const convertedLocations = entries?.flatMap((entry) =>
+      entry.metadata.plusCodeAddress
+        ? convertPlusCodeToLatLong(entry.metadata.plusCodeAddress)
+        : []
     )
+
+    const locationsWithoutUndefined = convertedLocations?.filter(
+      (location) => location !== undefined
+    )
+
+    return locationsWithoutUndefined
   }, [entries])
 
   return (
