@@ -7,7 +7,7 @@ export type LatLongFormat = {
 }
 
 export function convertPlusCodeToLatLong(plusCode: string): LatLongFormat {
-  const decoded = openLocationCode.decode("6GCRPR6C+24")
+  const decoded = openLocationCode.decode(plusCode)
 
   return {
     lat: decoded.latitudeCenter,
