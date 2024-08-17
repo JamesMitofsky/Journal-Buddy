@@ -65,7 +65,13 @@ export default function FolderPicker() {
             {journalEntries.map(({ name, metadata }, index) => (
               <TableRow key={index} className="border-b">
                 <TableCell className="p-4 font-medium">{name}</TableCell>
-                <TableCell className="p-4">{metadata.date}</TableCell>
+                <TableCell className="p-4">
+                  {new Date(metadata.date).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </TableCell>
                 <TableCell className="p-4">
                   {metadata?.tags &&
                     metadata.tags.map((tag) => (
