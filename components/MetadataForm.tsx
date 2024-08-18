@@ -1,6 +1,8 @@
 "use client"
 
 import React from "react"
+
+import "@mdxeditor/editor/style.css"
 import { MDXEditorMethods } from "@mdxeditor/editor"
 import { saveAs } from "file-saver"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
