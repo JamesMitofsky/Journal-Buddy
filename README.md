@@ -1,6 +1,6 @@
-# 📝 Journal Metadata Formatter
+# 📝 Journal Buddy
 
-This app streamlines the process of digitizing the metadata associated with my journal entries into a Markdown based solution.
+Streamline the process of digitizing journal entries into Markdown. Then, once in this format, provide a way to analyze these entries together. Your data stays on your computer, so your reflections remain completely yours.
 
 ## 📚 Why I Built This App
 
@@ -8,7 +8,7 @@ As someone who loves the kinesthetics of writing by hand, I've spilled a lot of 
 
 I've been using [Obsidian](https://obsidian.md/) for a while, but reliably typing out the metadata of each entry is a tedious ritual, and that frustration compromises data fidelity and discourages regularly contributing to the transcription.
 
-That's where the Journal Metadata Formatter comes in! By automating the formatting process, it reduces the fuss to focus on what truly matters: capturing thoughts and reflections.
+That's where Journal Buddy comes in! By automating the formatting process, it reduces the fuss to focus on what truly matters: capturing thoughts and reflections.
 
 ## 🛠️ How It Works
 

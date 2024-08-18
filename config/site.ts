@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Journal Metadata Formatter",
+  name: "Journal Buddy",
   description: "Format journal metadata for submission to a markdown file.",
   mainNav: [
     {
