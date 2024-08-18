@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import useLocalStorageState from "use-local-storage-state"
 
-import { LocationType } from "@/types/LocationType"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,17 +21,20 @@ import {
 } from "@/components/ui/popover"
 
 type ComboboxProps = {
-  selectedItem: LocationType | undefined
-  onChange: (value: LocationType | undefined) => void
+  selectedItem: string | undefined
+  onChange: (value: string | undefined) => void
 }
 
-export function Combobox({ selectedItem, onChange }: ComboboxProps) {
+export function LocationCategoryCombobox({
+  selectedItem,
+  onChange,
+}: ComboboxProps) {
   const [open, setOpen] = useState(false)
 
-  const [existingMapLocations] = useLocalStorageState<LocationType[]>(
-    "mapLocations",
+  const [existingLocationCategories] = useLocalStorageState<string[]>(
+    "locationCategories",
     {
-      defaultValue: [],
+      defaultValue: ["Chez moi", "In transit", "Work", "School"],
     }
   )
 
@@ -46,46 +48,35 @@ export function Combobox({ selectedItem, onChange }: ComboboxProps) {
           className="w-full justify-between"
         >
           {selectedItem
-            ? existingMapLocations.find(
-                (address) => address.label === selectedItem.label
-              )?.label
-            : "Select location..."}
+            ? existingLocationCategories.find(
+                (category) => category === selectedItem
+              )
+            : "Select category..."}
           <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="p-0">
         <Command>
-          <CommandInput placeholder="Search address..." />
+          <CommandInput placeholder="Search category..." />
           <CommandList>
-            <CommandEmpty>No address found.</CommandEmpty>
+            <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              {existingMapLocations.map((address) => (
+              {existingLocationCategories.map((category) => (
                 <CommandItem
-                  key={address.plusCode}
-                  value={address.label}
+                  key={category}
+                  value={category}
                   onSelect={() => {
-                    onChange(
-                      address.label === selectedItem?.label
-                        ? undefined
-                        : address
-                    )
+                    onChange(category === selectedItem ? undefined : category)
                     setOpen(false)
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 size-4",
-                      selectedItem?.label === address.label
-                        ? "opacity-100"
-                        : "opacity-0"
+                      selectedItem === category ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {address.label}
-                  {address.plusCode && (
-                    <span className="text-slate-400">
-                      &nbsp;— {address.plusCode}
-                    </span>
-                  )}
+                  {category}
                 </CommandItem>
               ))}
             </CommandGroup>

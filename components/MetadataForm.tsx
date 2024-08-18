@@ -69,6 +69,7 @@ export const MetadataForm: React.FC = () => {
 Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${location?.label}
+Location Category: ${location?.category}
 Plus Code Address: ${location?.plusCode}
 Page: ${page}
 Tags: [${formattedTags}]
@@ -184,20 +185,6 @@ ${content}
             />
           </div>
 
-          {/* <div>
-            <Label htmlFor="content" className="mb-1 block">
-              Content
-            </Label>
-            <Input
-              type="text"
-              id="content"
-              {...register("content")}
-              className="w-full"
-            />
-            {errors.content && (
-              <span className="text-red-500">This field is required</span>
-            )}
-          </div> */}
           <Controller
             name="content"
             control={control}
