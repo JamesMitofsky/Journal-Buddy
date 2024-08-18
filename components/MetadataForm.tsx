@@ -174,7 +174,7 @@ ${content}
 
           <div>
             <Label htmlFor="tags" className="mb-1 block">
-              Tags (comma separated)*
+              Tags (comma separated)
             </Label>
             <Input
               type="text"
@@ -182,9 +182,6 @@ ${content}
               {...register("tags")}
               className="w-full"
             />
-            {errors.tags && (
-              <span className="text-red-500">This field is required</span>
-            )}
           </div>
 
           {/* <div>
