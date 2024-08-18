@@ -2,7 +2,7 @@
 
 Streamline the process of digitizing journal entries into Markdown. Then, once in this format, provide a way to analyze these entries together. Your data stays on your computer, so your reflections remain completely yours.
 
-## 📚 Why I Built This App
+## 📚 Purpose
 
 As someone who loves the kinesthetics of writing by hand, I've spilled a lot of ink writing in my journal. On the other hand, as someone who loves data, I know the my rambly thoughts need to become searchable. The first step down this road is transcription.
 
@@ -12,16 +12,18 @@ That's where Journal Buddy comes in! By automating the formatting process, it re
 
 ## 🛠️ How It Works
 
-1. **User Input:** Enter journal entry details into the app.
-2. **Metadata Generation:** The app automatically formats the metadata according to a predefined and versioned structure.
-3. **Copy and Paste:** With the formatted metadata ready, the data is ready to go through a validation step and can be copied to the clipboard in the correct format.
+1. **User input:** Enter journal entry details into the app.
+2. **Metadata formatting:** The app automatically formats the metadata according to a predefined and versioned structure.
+3. **Download the markdown file:** With the formatted metadata ready, the data is available to be downloaded as a markdown file (at which point the data will be validated to check for missing fields).
+4. **Visualize the results:** After doing this for several files, navigate to the Map page and view the entries on a map and search for other possible conclusions.
 
 ## 🚀 Getting Started
 
-1. Clone the repository
-2. Install dependencies: `npm i`
-3. Run the app: `npm run dev`
-4. Open the browser and navigate to http://localhost:3000
+1. Install Node & its package manager
+2. Clone this repository
+3. Install dependencies: `npm i`
+4. Run the app: `npm run dev`
+5. Open the browser and navigate to http://localhost:3000
 
 ## 🎯 Future Enhancements
 
