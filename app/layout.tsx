@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { DialogProvider } from "@/hooks/useDialog"
 import { Toaster } from "@/components/ui/toaster"
 import { DefaultSettingsDialog } from "@/components/DefaultSettingsDialog"
+import Footer from "@/components/Footer"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <div className="relative flex min-h-screen flex-col">
                 <SiteHeader />
                 <div className="flex-1">{children}</div>
+                <Footer />
               </div>
               {/* <TailwindIndicator /> */}
               <Toaster />
