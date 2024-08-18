@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { MDXEditorMethods } from "@mdxeditor/editor"
 import { saveAs } from "file-saver"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
@@ -8,6 +9,7 @@ import useLocalStorageState from "use-local-storage-state"
 import { LocationType } from "@/types/LocationType"
 import { MetadataType } from "@/types/MetadataType"
 
+import { ForwardRefEditor } from "./markdown-editor/ForwardRefEditor"
 import { Combobox } from "./ui/Combobox"
 import { Button } from "./ui/button"
 import { CardContent } from "./ui/card"
@@ -19,6 +21,7 @@ type FormData = Pick<MetadataType["metadata"], "date" | "time" | "page"> & {
   title: string
   location?: LocationType
   tags?: string
+  content?: string
 }
 
 export const MetadataForm: React.FC = () => {
@@ -28,6 +31,7 @@ export const MetadataForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
+  const markdownRef = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
 
@@ -38,6 +42,7 @@ export const MetadataForm: React.FC = () => {
     location,
     page,
     tags,
+    content,
   }) => {
     if (!journalNumber) {
       toast({
@@ -68,6 +73,7 @@ Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
+${content}
 `
 
     try {
@@ -178,6 +184,32 @@ Schema Version: 1
               <span className="text-red-500">This field is required</span>
             )}
           </div>
+
+          {/* <div>
+            <Label htmlFor="content" className="mb-1 block">
+              Content
+            </Label>
+            <Input
+              type="text"
+              id="content"
+              {...register("content")}
+              className="w-full"
+            />
+            {errors.content && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div> */}
+          <Controller
+            name="content"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ForwardRefEditor
+                markdown={value || ""}
+                ref={markdownRef}
+                onChange={onChange}
+              />
+            )}
+          />
 
           <Button type="submit" className="mt-4 w-full">
             Save to file!
