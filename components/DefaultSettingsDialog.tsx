@@ -23,8 +23,10 @@ export function DefaultSettingsDialog() {
   const { isDialogOpen, toggleIsDialogOpen } = useDialog()
   const { toast } = useToast()
 
-  const [journalNumber, setJournalNumber] =
-    useLocalStorageState<number>("journalNumber")
+  const [journalNumber, setJournalNumber] = useLocalStorageState<number>(
+    "journalNumber",
+    { defaultValue: 1 }
+  )
 
   const handleSetJournalNumber = (
     event: React.ChangeEvent<HTMLInputElement>
