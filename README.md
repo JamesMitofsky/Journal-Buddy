@@ -1,6 +1,6 @@
-# 📝 Journal Metadata Formatter
+# 📝 Journal Buddy
 
-This app streamlines the process of digitizing the metadata associated with my journal entries into a Markdown based solution.
+Streamline the process of digitizing journal entries into Markdown. Then, once in this format, provide a way to analyze these entries together. Your data stays on your computer, so your reflections remain completely yours.
 
 ## 📚 Why I Built This App
 
@@ -8,7 +8,7 @@ As someone who loves the kinesthetics of writing by hand, I've spilled a lot of 
 
 I've been using [Obsidian](https://obsidian.md/) for a while, but reliably typing out the metadata of each entry is a tedious ritual, and that frustration compromises data fidelity and discourages regularly contributing to the transcription.
 
-That's where the Journal Metadata Formatter comes in! By automating the formatting process, it reduces the fuss to focus on what truly matters: capturing thoughts and reflections.
+That's where Journal Buddy comes in! By automating the formatting process, it reduces the fuss to focus on what truly matters: capturing thoughts and reflections.
 
 ## 🛠️ How It Works
 
@@ -27,8 +27,14 @@ That's where the Journal Metadata Formatter comes in! By automating the formatti
 
 Here are a few ideas for future updates:
 
-- **Auto-suggest existing tags:** Past entries could be read to create a list of existing tags that can be recommended.
-- **Address verification:** Verify that the given What3words address definitely exists, avoiding possible typos.
+- [ ] **Auto-suggest existing tags:** Past entries on the computer could be read to create a list of existing tags that can be recommended.
+- [ ] **Auto-suggest existing locations:** Rather than using local storage for past locations, past entries on the computer could be read to create a list of existing tags that can be recommended.
+- [ ] **Address verification:** Provide a visual verification for the given Plus Code address, making sure it's not in some wildly wrong place.
+- [x] **Automate file creation:** Rather than copying the metadata to a file, automate the file creation in a given directory on the user's computer.
+- [ ] **Have popups link to the full entry:** Include a link in the little pop up from the map which leads to some sort of slide up dialog that shows the entry and its basic info (think ShadCN UI).
+- [ ] **Printable map:** Have pretty version of this map.
+- [ ] **Clustering locations:** Include clusters, according to the leaflet specifications.
+- [ ] **Animate the map to show entries over time:**
 
 ## 🤝 Contributing
 

@@ -1,11 +1,17 @@
 "use client"
 
 import React from "react"
+
+import "@mdxeditor/editor/style.css"
+import { MDXEditorMethods } from "@mdxeditor/editor"
+import { saveAs } from "file-saver"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
 import { LocationType } from "@/types/LocationType"
+import { MetadataType } from "@/types/MetadataType"
 
+import { ForwardRefEditor } from "./markdown-editor/ForwardRefEditor"
 import { Combobox } from "./ui/Combobox"
 import { Button } from "./ui/button"
 import { CardContent } from "./ui/card"
@@ -13,12 +19,11 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useToast } from "./ui/use-toast"
 
-type FormData = {
-  date: string
-  time?: string
+type FormData = Pick<MetadataType["metadata"], "date" | "time" | "page"> & {
+  title: string
   location?: LocationType
-  pageNumber: number
   tags?: string
+  content?: string
 }
 
 export const MetadataForm: React.FC = () => {
@@ -28,15 +33,18 @@ export const MetadataForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
+  const markdownRef = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
 
   const onSubmit: SubmitHandler<FormData> = async ({
+    title,
     date,
     time,
     location,
-    pageNumber,
+    page,
     tags,
+    content,
   }) => {
     if (!journalNumber) {
       toast({
@@ -62,24 +70,26 @@ Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${location?.label}
 Plus Code Address: ${location?.plusCode}
-Page: ${pageNumber}
+Page: ${page}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
+${content}
 `
 
     try {
-      await navigator.clipboard.writeText(metaData)
+      const blob = new Blob([metaData], { type: "text/markdown;charset=utf-8" })
+      saveAs(blob, `${title}.md`)
       toast({
         title: "Success",
-        description: "Metadata copied to clipboard",
+        description: "Metadata saved to file",
         variant: "success",
       })
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to copy metadata to clipboard",
+        description: "Failed to save metadata to file",
         variant: "error",
       })
     }
@@ -89,6 +99,21 @@ Schema Version: 1
     <>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <Label htmlFor="title" className="mb-1 block">
+              Title*
+            </Label>
+            <Input
+              type="text"
+              id="title"
+              {...register("title", { required: true })}
+              className="w-full"
+            />
+            {errors.title && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+
           <div>
             <Label htmlFor="date" className="mb-1 block">
               Date*
@@ -136,20 +161,20 @@ Schema Version: 1
             <Input
               type="number"
               id="pageNumber"
-              {...register("pageNumber", {
+              {...register("page", {
                 required: true,
                 valueAsNumber: true,
               })}
               className="w-full"
             />
-            {errors.pageNumber && (
+            {errors.page && (
               <span className="text-red-500">This field is required</span>
             )}
           </div>
 
           <div>
             <Label htmlFor="tags" className="mb-1 block">
-              Tags (comma separated)*
+              Tags (comma separated)
             </Label>
             <Input
               type="text"
@@ -157,13 +182,36 @@ Schema Version: 1
               {...register("tags")}
               className="w-full"
             />
-            {errors.tags && (
-              <span className="text-red-500">This field is required</span>
-            )}
           </div>
 
+          {/* <div>
+            <Label htmlFor="content" className="mb-1 block">
+              Content
+            </Label>
+            <Input
+              type="text"
+              id="content"
+              {...register("content")}
+              className="w-full"
+            />
+            {errors.content && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div> */}
+          <Controller
+            name="content"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ForwardRefEditor
+                markdown={value || ""}
+                ref={markdownRef}
+                onChange={onChange}
+              />
+            )}
+          />
+
           <Button type="submit" className="mt-4 w-full">
-            Copy to clipboard!
+            Save to file!
           </Button>
         </form>
       </CardContent>
