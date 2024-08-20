@@ -4,7 +4,7 @@ Streamline the process of digitizing journal entries into Markdown. Then, once i
 
 ## 📚 Purpose
 
-As someone who loves the kinesthetics of writing by hand, I've spilled a lot of ink writing in my journal. On the other hand, as someone who loves data, I know the my rambly thoughts need to become searchable. The first step down this road is transcription.
+As someone who loves the kinesthetics of writing by hand, I've spilled a lot of ink writing in my journal. On the other hand, as someone who loves data, I know my rambly thoughts need to become searchable. The first step down this road is transcription.
 
 I've been using [Obsidian](https://obsidian.md/) for a while, but reliably typing out the metadata of each entry is a tedious ritual, and that frustration compromises data fidelity and discourages regularly contributing to the transcription.
 
