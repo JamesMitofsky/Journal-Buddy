@@ -34,7 +34,14 @@ export function LocationCategoryCombobox({
   const [existingLocationCategories] = useLocalStorageState<string[]>(
     "locationCategories",
     {
-      defaultValue: ["Chez moi", "In transit", "Work", "School"],
+      defaultValue: [
+        "Chez moi",
+        "Public space",
+        "Chez quelqu'un",
+        "In transit",
+        "Work",
+        "School",
+      ],
     }
   )
 
