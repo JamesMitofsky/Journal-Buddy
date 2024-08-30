@@ -61,7 +61,7 @@ export function Combobox({ selectedItem, onChange }: ComboboxProps) {
             <CommandGroup>
               {existingMapLocations.map((address) => (
                 <CommandItem
-                  key={address.plusCode}
+                  key={address.latLongAddress}
                   value={address.label}
                   onSelect={() => {
                     onChange(
@@ -81,9 +81,9 @@ export function Combobox({ selectedItem, onChange }: ComboboxProps) {
                     )}
                   />
                   {address.label}
-                  {address.plusCode && (
+                  {address.latLongAddress && (
                     <span className="text-slate-400">
-                      &nbsp;— {address.plusCode}
+                      &nbsp;— {address.latLongAddress}
                     </span>
                   )}
                 </CommandItem>

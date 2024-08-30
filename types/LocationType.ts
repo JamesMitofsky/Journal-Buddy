@@ -1,5 +1,5 @@
 export type LocationType = {
   label: string
-  plusCode?: string
+  latLongAddress?: string
   category?: string
 }

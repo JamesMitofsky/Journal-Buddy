@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
 import { LocationType } from "@/types/LocationType"
+import createGoogleMapsLatLongUrl from "@/lib/createGoogleMapsLatLongUrl"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -23,7 +24,7 @@ import { useToast } from "./ui/use-toast"
 
 interface FormValues {
   newLocation: string
-  newCode?: string
+  newLatLong?: string
   newCategory?: string
 }
 
@@ -44,10 +45,14 @@ export function LocationMap() {
     formState: { errors },
   } = useForm<FormValues>()
 
-  const onSubmit = ({ newCode, newLocation, newCategory }: FormValues) => {
+  const onSubmit = ({ newLatLong, newLocation, newCategory }: FormValues) => {
     setExistingMapLocations((prev) => [
       ...prev,
-      { plusCode: newCode, label: newLocation, category: newCategory },
+      {
+        latLongAddress: newLatLong,
+        label: newLocation,
+        category: newCategory,
+      },
     ])
     reset()
   }
@@ -92,8 +97,8 @@ export function LocationMap() {
           />
         </div>
         <Input
-          {...register("newCode")}
-          placeholder="+ Code"
+          {...register("newLatLong")}
+          placeholder="Latitude Longitutde Values"
           type="text"
           className="col-span-3"
         />
@@ -113,11 +118,11 @@ export function LocationMap() {
               <TableHead>Label</TableHead>
               <TableHead>Category</TableHead>
               <TableHead className="flex items-center justify-center">
-                + Code
+                Latitude, Longitude
                 <Link
                   className="ml-3"
                   target="_blank"
-                  href="https://plus.codes/map"
+                  href="https://maps.google.com"
                 >
                   <ExternalLink size="1rem" />
                 </Link>
@@ -125,25 +130,27 @@ export function LocationMap() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {existingMapLocations.map(({ plusCode, label, category }) => (
-              <TableRow key={plusCode}>
+            {existingMapLocations.map(({ latLongAddress, label, category }) => (
+              <TableRow key={latLongAddress}>
                 <TableCell>{label}</TableCell>
                 <TableCell>{category}</TableCell>
                 <TableCell>
-                  {plusCode && (
+                  {latLongAddress && (
                     <Link
                       className="flex items-center justify-center"
                       target="_blank"
-                      href={`https://plus.codes/${plusCode}`}
+                      href={createGoogleMapsLatLongUrl(latLongAddress)}
                     >
                       <LinkIcon size="1rem" className="mr-1" />
-                      {plusCode}
+                      {latLongAddress}
                     </Link>
                   )}
                 </TableCell>
                 <TableCell>
                   <Button
-                    onClick={() => handleDeleteLocation({ plusCode, label })}
+                    onClick={() =>
+                      handleDeleteLocation({ latLongAddress, label })
+                    }
                   >
                     <CircleX className="h-6 w-[1.3rem]" />
                   </Button>
