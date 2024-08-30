@@ -1,10 +1,11 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
 import "react-leaflet-marker"
-import { MetadataReadyForMapType } from "@/types/MetadataType"
+import { JournalMarkdownType } from "@/types/MetadataType"
+import formatForLeafletMap from "@/lib/formatForLeafletMap"
 
 type LeafletMapProps = {
-  journalEntries: MetadataReadyForMapType[] | undefined
+  journalEntries: JournalMarkdownType[] | undefined
 }
 
 export default function LeafletMap({ journalEntries }: LeafletMapProps) {
@@ -20,9 +21,9 @@ export default function LeafletMap({ journalEntries }: LeafletMapProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {journalEntries?.map(
-        ({ name, latLongAddress }) =>
+        ({ name, metadata: { latLongAddress } }) =>
           latLongAddress && (
-            <Marker position={latLongAddress} key={name}>
+            <Marker position={formatForLeafletMap(latLongAddress)} key={name}>
               <Popup>{name}</Popup>
             </Marker>
           )

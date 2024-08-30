@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import { CircleX, ExternalLink, Link as LinkIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
 import { LocationType } from "@/types/LocationType"
+import createGoogleMapsLatLongUrl from "@/lib/createGoogleMapsLatLongUrl"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -17,12 +18,14 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { LocationCategoryCombobox } from "./ui/LocationCategoryCombobox"
 import { Button } from "./ui/button"
 import { useToast } from "./ui/use-toast"
 
 interface FormValues {
   newLocation: string
-  newCode: string
+  newLatLong?: string
+  newCategory?: string
 }
 
 export function LocationMap() {
@@ -31,20 +34,25 @@ export function LocationMap() {
   const [existingMapLocations, setExistingMapLocations] = useLocalStorageState<
     LocationType[]
   >("mapLocations", {
-    defaultValue: [{ plusCode: "2323423", label: "Work" }],
+    defaultValue: [],
   })
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<FormValues>()
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = ({ newLatLong, newLocation, newCategory }: FormValues) => {
     setExistingMapLocations((prev) => [
       ...prev,
-      { plusCode: data.newCode, label: data.newLocation },
+      {
+        latLongAddress: newLatLong,
+        label: newLocation,
+        category: newCategory,
+      },
     ])
     reset()
   }
@@ -65,10 +73,10 @@ export function LocationMap() {
   return (
     <>
       <form
-        className="grid grid-cols-8 items-center gap-4"
+        className="grid grid-cols-12 items-center gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Label className="col-span-2 text-right">Location</Label>
+        <Label className="col-span-12 text-left">Location</Label>
         <Input
           id="label"
           {...register("newLocation", { required: true })}
@@ -76,18 +84,30 @@ export function LocationMap() {
           type="text"
           className="col-span-3"
         />
+        <div className="col-span-3">
+          <Controller
+            name="newCategory"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <LocationCategoryCombobox
+                onChange={onChange}
+                selectedItem={value}
+              />
+            )}
+          />
+        </div>
         <Input
-          {...register("newCode")}
-          placeholder="+ Code"
+          {...register("newLatLong")}
+          placeholder="Latitude Longitutde Values"
           type="text"
           className="col-span-3"
         />
         {errors.newLocation && (
-          <span className="col-span-3 col-start-3 text-red-500">
+          <span className="col-span-2 text-red-500">
             This field is required
           </span>
         )}
-        <Button type="submit" className="col-span-6 col-start-3">
+        <Button type="submit" className="col-span-3">
           Add Location
         </Button>
       </form>
@@ -96,12 +116,13 @@ export function LocationMap() {
           <TableHeader>
             <TableRow>
               <TableHead>Label</TableHead>
+              <TableHead>Category</TableHead>
               <TableHead className="flex items-center justify-center">
-                + Code
+                Latitude, Longitude
                 <Link
                   className="ml-3"
                   target="_blank"
-                  href="https://plus.codes/map"
+                  href="https://maps.google.com"
                 >
                   <ExternalLink size="1rem" />
                 </Link>
@@ -109,24 +130,27 @@ export function LocationMap() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {existingMapLocations.map(({ plusCode, label }) => (
-              <TableRow key={plusCode}>
+            {existingMapLocations.map(({ latLongAddress, label, category }) => (
+              <TableRow key={latLongAddress}>
                 <TableCell>{label}</TableCell>
+                <TableCell>{category}</TableCell>
                 <TableCell>
-                  {plusCode && (
+                  {latLongAddress && (
                     <Link
                       className="flex items-center justify-center"
                       target="_blank"
-                      href={`https://plus.codes/${plusCode}`}
+                      href={createGoogleMapsLatLongUrl(latLongAddress)}
                     >
                       <LinkIcon size="1rem" className="mr-1" />
-                      {plusCode}
+                      {latLongAddress}
                     </Link>
                   )}
                 </TableCell>
                 <TableCell>
                   <Button
-                    onClick={() => handleDeleteLocation({ plusCode, label })}
+                    onClick={() =>
+                      handleDeleteLocation({ latLongAddress, label })
+                    }
                   >
                     <CircleX className="h-6 w-[1.3rem]" />
                   </Button>

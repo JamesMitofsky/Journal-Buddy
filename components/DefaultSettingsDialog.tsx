@@ -23,8 +23,10 @@ export function DefaultSettingsDialog() {
   const { isDialogOpen, toggleIsDialogOpen } = useDialog()
   const { toast } = useToast()
 
-  const [journalNumber, setJournalNumber] =
-    useLocalStorageState<number>("journalNumber")
+  const [journalNumber, setJournalNumber] = useLocalStorageState<number>(
+    "journalNumber",
+    { defaultValue: 1 }
+  )
 
   const handleSetJournalNumber = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -49,7 +51,7 @@ export function DefaultSettingsDialog() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="journalNumber" className="text-right">
+            <Label htmlFor="journalNumber" className="col-span-4 text-left">
               Journal Number
             </Label>
             <Input
@@ -57,7 +59,7 @@ export function DefaultSettingsDialog() {
               value={journalNumber}
               onChange={handleSetJournalNumber}
               type="number"
-              className="col-span-3"
+              className="col-span-4"
             />
           </div>
           <Separator className="my-4" />

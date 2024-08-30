@@ -1,13 +1,13 @@
 import matter from "gray-matter"
 
 import { EntryFileType } from "@/types/EntryFileType"
-import { MetadataType } from "@/types/MetadataType"
+import { JournalMarkdownType } from "@/types/MetadataType"
 
 type OriginalMarkdownData = {
   Date: string
   Time: string
   Location: string
-  "Plus Code Address": string
+  "Latitude, Longitude": string
   Page: number
   Tags: string[]
   "Journal Number": number
@@ -43,14 +43,14 @@ function normalizeKeys(obj: Record<string, any>): Record<string, any> {
 
 function convertMetadataToCamelCase(
   originalData: OriginalMarkdownData
-): MetadataType["metadata"] {
+): JournalMarkdownType["metadata"] {
   const normalizedData = normalizeKeys(originalData)
 
   return {
     date: normalizedData["date"],
     time: normalizedData["time"],
     location: normalizedData["location"],
-    plusCodeAddress: normalizedData["plus code address"],
+    latLongAddress: normalizedData["latitude, longitude"],
     page: normalizedData["page"],
     tags: normalizedData["tags"],
     journalNumber: normalizedData["journal number"],

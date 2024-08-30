@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import { MetadataType } from "@/types/MetadataType"
+import { JournalMarkdownType } from "@/types/MetadataType"
 import { getMarkdownData } from "@/lib/getMarkdownData"
 import { parseMarkdown } from "@/lib/parseMarkdown"
 import { Badge } from "@/components/ui/badge"
@@ -19,7 +19,9 @@ import { useToast } from "@/components/ui/use-toast"
 import MapOfEntries from "@/components/MapOfEntries"
 
 export default function FolderPicker() {
-  const [journalEntries, setJournalEntries] = useState<MetadataType[]>([])
+  const [journalEntries, setJournalEntries] = useState<JournalMarkdownType[]>(
+    []
+  )
   const { toast } = useToast()
 
   const handleFolderSelection = async () => {

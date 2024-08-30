@@ -9,7 +9,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
 import { LocationType } from "@/types/LocationType"
-import { MetadataType } from "@/types/MetadataType"
+import { JournalMarkdownType } from "@/types/MetadataType"
 
 import { ForwardRefEditor } from "./markdown-editor/ForwardRefEditor"
 import { Combobox } from "./ui/Combobox"
@@ -19,7 +19,10 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useToast } from "./ui/use-toast"
 
-type FormData = Pick<MetadataType["metadata"], "date" | "time" | "page"> & {
+type FormData = Pick<
+  JournalMarkdownType["metadata"],
+  "date" | "time" | "page"
+> & {
   title: string
   location?: LocationType
   tags?: string
@@ -69,7 +72,8 @@ export const MetadataForm: React.FC = () => {
 Date: ${formattedDate}
 Time: ${formattedTime}
 Location: ${location?.label}
-Plus Code Address: ${location?.plusCode}
+Location Category: ${location?.category}
+Latitude, Longitude: ${location?.latLongAddress}
 Page: ${page}
 Tags: [${formattedTags}]
 Journal Number: ${journalNumber}
@@ -184,20 +188,6 @@ ${content}
             />
           </div>
 
-          {/* <div>
-            <Label htmlFor="content" className="mb-1 block">
-              Content
-            </Label>
-            <Input
-              type="text"
-              id="content"
-              {...register("content")}
-              className="w-full"
-            />
-            {errors.content && (
-              <span className="text-red-500">This field is required</span>
-            )}
-          </div> */}
           <Controller
             name="content"
             control={control}
