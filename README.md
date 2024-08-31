@@ -1,4 +1,7 @@
-# 📝 Journal Buddy
+# Journal Buddy
+<div align="center">
+  <img src="https://github.com/JamesMitofsky/Journal-Buddy/blob/main/public/logo.png?raw=true" alt="Journal Buddy Logo">
+</div>
 
 Streamline the process of digitizing journal entries into Markdown. Then, once in this format, provide a way to analyze these entries together. Your data stays on your computer, so your reflections remain completely yours.
 
