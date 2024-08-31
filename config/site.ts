@@ -5,11 +5,11 @@ export const siteConfig = {
   description: "Format journal metadata for submission to a markdown file.",
   mainNav: [
     {
-      title: "Format",
+      title: "Create",
       href: "/",
     },
     {
-      title: "Map",
+      title: "Visualize",
       href: "/map",
     },
   ],
