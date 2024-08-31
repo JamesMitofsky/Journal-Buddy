@@ -68,15 +68,15 @@ export const MetadataForm: React.FC = () => {
     const metaData = `---
 Date: ${formattedDate}
 Time: ${formattedTime}
-Location: ${location?.label}
-Location Category: ${location?.category}
-Latitude, Longitude: ${location?.latLongAddress}
+Location: ${location?.label ? location.label : ""}
+Location Category: ${location?.category ? location.category : ""}
+Latitude, Longitude: ${location?.latLongAddress ? location.latLongAddress : ""}
 Page: ${page}
-Tags: [${formattedTags}]
+Tags: ${formattedTags ? formattedTags.join(", ") : ""}
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
-${content}
+${content ? content : ""}
 `
 
     try {
