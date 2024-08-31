@@ -13,7 +13,7 @@ export function DefaultSettings() {
 
   return (
     <>
-      {pathname === "/" && (
+      {pathname === "/transcribe" && (
         <Button variant="ghost" size="icon" onClick={toggleIsDialogOpen}>
           <Settings className="h-6 w-[1.3rem]" />
         </Button>
