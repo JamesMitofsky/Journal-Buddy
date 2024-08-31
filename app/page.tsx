@@ -92,10 +92,7 @@ export default function FolderPicker() {
           </TableBody>
         </Table>
       </div>
-      <Button
-        className="rounded-md bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
-        onClick={handleFolderSelection}
-      >
+      <Button className="rounded-md px-6 py-2" onClick={handleFolderSelection}>
         {isLoading ? <Spinner className="text-white" /> : "Select Folder"}
       </Button>
     </div>
