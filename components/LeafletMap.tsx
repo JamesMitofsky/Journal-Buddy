@@ -44,20 +44,6 @@ export default function LeafletMap({ journalEntries }: LeafletMapProps) {
           )}
         </MarkerClusterGroup>
       )}
-      {/* {journalEntries?.map(
-        ({ name, metadata: { latLongAddress } }) =>
-          latLongAddress && (
-            <Marker position={formatForLeafletMap(latLongAddress)} key={name}>
-              <Popup>{name}</Popup>
-            </Marker>
-          )
-      )} */}
-
-      {/* <MarkerClusterGroup chunkedLoading>
-        {[1, 2, 3].map((address, index) => (
-          <Marker key={index} position={[0, 0]}></Marker>
-        ))}
-      </MarkerClusterGroup> */}
     </MapContainer>
   )
 }
