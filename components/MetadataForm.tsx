@@ -13,6 +13,8 @@ import { JournalMarkdownType } from "@/types/MetadataType"
 
 import { ForwardRefEditor } from "./markdown-editor/ForwardRefEditor"
 import { Combobox } from "./ui/Combobox"
+import { Option } from "./ui/MultipleSelector"
+import TagsSelector from "./ui/TagsSelector"
 import { Button } from "./ui/button"
 import { CardContent } from "./ui/card"
 import { Input } from "./ui/input"
@@ -25,7 +27,7 @@ type FormData = Pick<
 > & {
   title: string
   location?: LocationType
-  tags?: string
+  tags?: Option[]
   content?: string
 }
 
@@ -58,13 +60,8 @@ export const MetadataForm: React.FC = () => {
       })
       throw new Error("Journal number not set")
     }
-    const formattedTags = tags
-      ? tags
-          .split(",") // split the string into array items
-          .map((tag) => tag.trim()) // remove white space before and after, since the original string has spaces after commas
-          .map((tag) => tag.replace(/ /g, "-")) // replace all instances of spaces between words in a tag, replace it with a dash
-      : undefined
 
+    const formattedTags = tags?.map((tag) => tag.value)
     const formattedDate = date.split("T")[0]
     const formattedTime = time ? time.replace(":", "h") : ""
 
@@ -177,14 +174,13 @@ ${content}
           </div>
 
           <div>
-            <Label htmlFor="tags" className="mb-1 block">
-              Tags (comma separated)
-            </Label>
-            <Input
-              type="text"
-              id="tags"
-              {...register("tags")}
-              className="w-full"
+            <Label className="mb-1 block">Tags</Label>
+            <Controller
+              name="tags"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TagsSelector selectedOptions={value} onChange={onChange} />
+              )}
             />
           </div>
 
