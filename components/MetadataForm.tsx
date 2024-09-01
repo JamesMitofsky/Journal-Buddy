@@ -36,6 +36,7 @@ export const MetadataForm: React.FC = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>()
   const markdownRef = React.useRef<MDXEditorMethods>(null)
@@ -61,7 +62,9 @@ export const MetadataForm: React.FC = () => {
       throw new Error("Journal number not set")
     }
 
-    const formattedTags = tags?.map((tag) => tag.value)
+    const tagsAsArrayOfValues = tags?.map((tag) => tag.value)
+    const tagsArrayAsString = JSON.stringify(tagsAsArrayOfValues)
+
     const formattedDate = date.split("T")[0]
     const formattedTime = time ? time.replace(":", "h") : ""
 
@@ -72,7 +75,7 @@ Location: ${location?.label ? location.label : ""}
 Location Category: ${location?.category ? location.category : ""}
 Latitude, Longitude: ${location?.latLongAddress ? location.latLongAddress : ""}
 Page: ${page}
-Tags: ${formattedTags ? formattedTags.join(", ") : ""}
+Tags: ${tagsArrayAsString}
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
@@ -87,6 +90,18 @@ ${content ? content : ""}
         description: "Metadata saved to file",
         variant: "success",
       })
+
+      // reset state
+      reset({
+        title: "",
+        date: "",
+        time: "",
+        location: undefined,
+        page: null as any, // force react hook form to reset the value to undefined
+        tags: [],
+        content: "",
+      })
+      markdownRef.current?.setMarkdown("")
     } catch (error) {
       toast({
         title: "Error",
