@@ -3,6 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.mdxeditor-root-contenteditable {
+  border: 1px solid hsl(var(--input));
+  border-radius: 5px;
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+div.mdxeditor-toolbar {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 @layer base {
   :root {
     --background: 43 100% 100%;
