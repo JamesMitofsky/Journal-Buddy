@@ -59,7 +59,7 @@ export default function FolderPicker() {
 
   return (
     <>
-      <div className="mb-6 flex justify-between gap-3">
+      <div className="flex justify-between gap-3">
         <h1 className="text-2xl font-semibold">Visualize</h1>
         <Button
           className="rounded-md px-6 py-2"
@@ -69,7 +69,7 @@ export default function FolderPicker() {
         </Button>
       </div>
       <MapOfEntries entries={journalEntries} />
-      <Table className="mt-10 w-full border-collapse">
+      <Table className="w-full border-collapse">
         <TableHeader className="bg-gray-100">
           <TableRow>
             <TableHead className="p-4 text-left">Name</TableHead>
