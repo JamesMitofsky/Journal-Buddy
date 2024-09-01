@@ -58,43 +58,46 @@ export default function FolderPicker() {
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center space-y-8 p-4">
-      <div className="w-full max-w-4xl">
-        <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
-        <MapOfEntries entries={journalEntries} />
-        <Table className="w-full border-collapse">
-          <TableHeader className="bg-gray-100">
-            <TableRow>
-              <TableHead className="p-4 text-left">Name</TableHead>
-              <TableHead className="p-4 text-left">Date</TableHead>
-              <TableHead className="p-4 text-left">Tags</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {journalEntries.map(({ name, metadata }, index) => (
-              <TableRow key={index} className="border-b">
-                <TableCell className="p-4 font-medium">{name}</TableCell>
-                <TableCell className="p-4">
-                  {new Date(metadata.date).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </TableCell>
-                <TableCell className="p-4">
-                  {metadata?.tags &&
-                    metadata.tags.map((tag) => (
-                      <Badge variant="outline">{tag}</Badge>
-                    ))}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+    <>
+      <div className="mb-6 flex justify-between gap-3">
+        <h1 className="text-2xl font-semibold">Visualize</h1>
+        <Button
+          className="rounded-md px-6 py-2"
+          onClick={handleFolderSelection}
+        >
+          {isLoading ? <Spinner className="text-white" /> : "Select Folder"}
+        </Button>
       </div>
-      <Button className="rounded-md px-6 py-2" onClick={handleFolderSelection}>
-        {isLoading ? <Spinner className="text-white" /> : "Select Folder"}
-      </Button>
-    </div>
+      <MapOfEntries entries={journalEntries} />
+      <Table className="mt-10 w-full border-collapse">
+        <TableHeader className="bg-gray-100">
+          <TableRow>
+            <TableHead className="p-4 text-left">Name</TableHead>
+            <TableHead className="p-4 text-left">Date</TableHead>
+            <TableHead className="p-4 text-left">Tags</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {journalEntries.map(({ name, metadata }, index) => (
+            <TableRow key={index} className="border-b">
+              <TableCell className="p-4 font-medium">{name}</TableCell>
+              <TableCell className="p-4">
+                {new Date(metadata.date).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </TableCell>
+              <TableCell className="p-4">
+                {metadata?.tags &&
+                  metadata.tags.map((tag) => (
+                    <Badge variant="outline">{tag}</Badge>
+                  ))}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
 }

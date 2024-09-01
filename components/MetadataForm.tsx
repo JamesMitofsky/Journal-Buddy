@@ -16,7 +16,6 @@ import { Combobox } from "./ui/Combobox"
 import { Option } from "./ui/MultipleSelector"
 import TagsSelector from "./ui/TagsSelector"
 import { Button } from "./ui/button"
-import { CardContent } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useToast } from "./ui/use-toast"
@@ -113,109 +112,108 @@ ${content ? content : ""}
 
   return (
     <>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <Label htmlFor="title" className="mb-1 block">
-              Title*
-            </Label>
-            <Input
-              type="text"
-              id="title"
-              {...register("title", { required: true })}
-              className="w-full"
-            />
-            {errors.title && (
-              <span className="text-red-500">This field is required</span>
-            )}
-          </div>
+      <h1 className="mb-4 text-2xl font-semibold">Transcribe</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <Label htmlFor="title" className="mb-1 block">
+            Title*
+          </Label>
+          <Input
+            type="text"
+            id="title"
+            {...register("title", { required: true })}
+            className="w-full"
+          />
+          {errors.title && (
+            <span className="text-red-500">This field is required</span>
+          )}
+        </div>
 
-          <div>
-            <Label htmlFor="date" className="mb-1 block">
-              Date*
-            </Label>
-            <Input
-              type="date"
-              id="date"
-              {...register("date", { required: true })}
-              className="w-full"
-            />
-            {errors.date && (
-              <span className="text-red-500">This field is required</span>
-            )}
-          </div>
+        <div>
+          <Label htmlFor="date" className="mb-1 block">
+            Date*
+          </Label>
+          <Input
+            type="date"
+            id="date"
+            {...register("date", { required: true })}
+            className="w-full"
+          />
+          {errors.date && (
+            <span className="text-red-500">This field is required</span>
+          )}
+        </div>
 
-          <div>
-            <Label htmlFor="time" className="mb-1 block">
-              Time
-            </Label>
-            <Input
-              type="time"
-              id="time"
-              {...register("time")}
-              className="w-full"
-            />
-          </div>
+        <div>
+          <Label htmlFor="time" className="mb-1 block">
+            Time
+          </Label>
+          <Input
+            type="time"
+            id="time"
+            {...register("time")}
+            className="w-full"
+          />
+        </div>
 
-          <div>
-            <Label htmlFor="location" className="mb-1 block">
-              Location
-            </Label>
-            <Controller
-              name="location"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Combobox onChange={onChange} selectedItem={value} />
-              )}
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="pageNumber" className="mb-1 block">
-              Page Number:
-            </Label>
-            <Input
-              type="number"
-              id="pageNumber"
-              {...register("page", {
-                required: true,
-                valueAsNumber: true,
-              })}
-              className="w-full"
-            />
-            {errors.page && (
-              <span className="text-red-500">This field is required</span>
-            )}
-          </div>
-
-          <div>
-            <Label className="mb-1 block">Tags</Label>
-            <Controller
-              name="tags"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <TagsSelector selectedOptions={value} onChange={onChange} />
-              )}
-            />
-          </div>
-
+        <div>
+          <Label htmlFor="location" className="mb-1 block">
+            Location
+          </Label>
           <Controller
-            name="content"
+            name="location"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <ForwardRefEditor
-                markdown={value || ""}
-                ref={markdownRef}
-                onChange={onChange}
-              />
+              <Combobox onChange={onChange} selectedItem={value} />
             )}
           />
+        </div>
 
-          <Button type="submit" className="mt-4 w-full">
-            Save to file!
-          </Button>
-        </form>
-      </CardContent>
+        <div>
+          <Label htmlFor="pageNumber" className="mb-1 block">
+            Page Number:
+          </Label>
+          <Input
+            type="number"
+            id="pageNumber"
+            {...register("page", {
+              required: true,
+              valueAsNumber: true,
+            })}
+            className="w-full"
+          />
+          {errors.page && (
+            <span className="text-red-500">This field is required</span>
+          )}
+        </div>
+
+        <div>
+          <Label className="mb-1 block">Tags</Label>
+          <Controller
+            name="tags"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TagsSelector selectedOptions={value} onChange={onChange} />
+            )}
+          />
+        </div>
+
+        <Controller
+          name="content"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <ForwardRefEditor
+              markdown={value || ""}
+              ref={markdownRef}
+              onChange={onChange}
+            />
+          )}
+        />
+
+        <Button type="submit" className="mt-4 w-full">
+          Save to file!
+        </Button>
+      </form>
     </>
   )
 }
