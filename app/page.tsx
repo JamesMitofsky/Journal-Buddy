@@ -19,6 +19,12 @@ import {
 import { useToast } from "@/components/ui/use-toast"
 import MapOfEntries from "@/components/MapOfEntries"
 
+const extractHashtags = (content: string) => {
+  const hashtagPattern = /#\w+/g
+  const matches = content.match(hashtagPattern)
+  return matches || []
+}
+
 export default function FolderPicker() {
   const [journalEntries, setJournalEntries] = useState<JournalMarkdownType[]>(
     []
@@ -78,24 +84,28 @@ export default function FolderPicker() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {journalEntries.map(({ name, metadata }, index) => (
-            <TableRow key={index} className="border-b">
-              <TableCell className="p-4 font-medium">{name}</TableCell>
-              <TableCell className="p-4">
-                {new Date(metadata.date).toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </TableCell>
-              <TableCell className="p-4">
-                {metadata?.tags &&
-                  metadata.tags.map((tag) => (
+          {journalEntries.map(({ name, metadata, content }, index) => {
+            const tagsInsideContent = extractHashtags(content)
+            const allTags = [...tagsInsideContent, ...(metadata?.tags || [])]
+
+            return (
+              <TableRow key={index} className="border-b">
+                <TableCell className="p-4 font-medium">{name}</TableCell>
+                <TableCell className="p-4">
+                  {new Date(metadata.date).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </TableCell>
+                <TableCell className="p-4">
+                  {allTags.map((tag) => (
                     <Badge variant="outline">{tag}</Badge>
                   ))}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </>
