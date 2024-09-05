@@ -4,7 +4,7 @@ import React from "react"
 
 import "@mdxeditor/editor/style.css"
 import { MDXEditorMethods } from "@mdxeditor/editor"
-import { saveAs } from "file-saver"
+import saveAs from "file-saver"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import useLocalStorageState from "use-local-storage-state"
 
@@ -78,9 +78,10 @@ Tags: ${tagsArrayAsString}
 Journal Number: ${journalNumber}
 Schema Version: 1
 ---
-${content ? content : ""}
+${title.includes("?") ? `Original title: ${title}\n\n` : ""}${
+      content ? content : ""
+    }
 `
-
     try {
       const blob = new Blob([metaData], { type: "text/markdown;charset=utf-8" })
       saveAs(blob, `${title}.md`)
