@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 import { JournalMarkdownType } from "@/types/MetadataType"
 import { getMarkdownData } from "@/lib/getMarkdownData"
@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useToast } from "@/components/ui/use-toast"
+import AnnualActivityGraph from "@/components/AnnualActivityGraph"
 import MapOfEntries from "@/components/MapOfEntries"
 
 const extractHashtags = (content: string) => {
@@ -32,7 +33,7 @@ export default function FolderPicker() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleFolderSelection = async () => {
+  const handleFolderSelection = useCallback(async () => {
     setIsLoading(true)
     try {
       // Request access to the folder
@@ -61,7 +62,7 @@ export default function FolderPicker() {
       console.error("Error accessing folder:", error)
     }
     setIsLoading(false)
-  }
+  }, [setIsLoading, setJournalEntries, toast])
 
   return (
     <>
@@ -75,6 +76,7 @@ export default function FolderPicker() {
         </Button>
       </div>
       <MapOfEntries entries={journalEntries} />
+      <AnnualActivityGraph entries={journalEntries} />
       <Table className="w-full border-collapse">
         <TableHeader className="bg-gray-100">
           <TableRow>

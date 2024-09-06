@@ -64,6 +64,7 @@ export const MetadataForm: React.FC = () => {
     const tagsAsArrayOfValues = tags?.map((tag) => tag.value)
     const tagsArrayAsString = JSON.stringify(tagsAsArrayOfValues)
 
+    // stored with the ISO 8601 Format (YYYY-MM-DD)
     const formattedDate = date.split("T")[0]
     const formattedTime = time ? time.replace(":", "h") : ""
 
