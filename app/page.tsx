@@ -17,8 +17,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useToast } from "@/components/ui/use-toast"
-import AnnualActivityGraph from "@/components/AnnualActivityGraph"
 import MapOfEntries from "@/components/MapOfEntries"
+import GroupOfActivityGraphs from "@/components/activityGraph/GroupOfActivityGraphs"
 
 const extractHashtags = (content: string) => {
   const hashtagPattern = /#\w+/g
@@ -40,11 +40,7 @@ export default function FolderPicker() {
       const directoryHandle = await window.showDirectoryPicker()
       const files = await getMarkdownData(directoryHandle)
 
-      console.log(files)
-
       const parsedData = files.map((file) => parseMarkdown(file))
-
-      console.log(parsedData)
 
       setJournalEntries(parsedData)
 
@@ -76,7 +72,8 @@ export default function FolderPicker() {
         </Button>
       </div>
       <MapOfEntries entries={journalEntries} />
-      <AnnualActivityGraph entries={journalEntries} />
+      <GroupOfActivityGraphs entries={journalEntries} />
+      {/* <AnnualActivityGraph entries={journalEntries} /> */}
       <Table className="w-full border-collapse">
         <TableHeader className="bg-gray-100">
           <TableRow>
@@ -102,7 +99,9 @@ export default function FolderPicker() {
                 </TableCell>
                 <TableCell className="p-4">
                   {allTags.map((tag) => (
-                    <Badge variant="outline">{tag}</Badge>
+                    <Badge key={tag} variant="outline">
+                      {tag}
+                    </Badge>
                   ))}
                 </TableCell>
               </TableRow>
