@@ -63,22 +63,19 @@ export default function AnnualActivityGraph({ entries }: CalendarProps) {
     return <Skeleton loading />
   } else {
     return (
-      <div>
-        <h1>Annual Activity Graph</h1>
-        <Calendar
-          data={entriesForCalendar}
-          // labels={Object.assign({}, defaultLabels, labels)}
-          // ref={ref}
-          theme={DEFAULT_THEME}
-          totalCount={totalCount}
-          labels={{
-            totalCount: "{{count}} journal entries in {{year}}",
-          }}
-          maxLevel={2}
-          // start the week on monday
-          weekStart={1}
-        />
-      </div>
+      <Calendar
+        data={entriesForCalendar}
+        // labels={Object.assign({}, defaultLabels, labels)}
+        // ref={ref}
+        theme={DEFAULT_THEME}
+        totalCount={totalCount}
+        labels={{
+          totalCount: "{{count}} journal entries in {{year}}",
+        }}
+        maxLevel={2}
+        // start the week on monday
+        weekStart={1}
+      />
     )
   }
 }
