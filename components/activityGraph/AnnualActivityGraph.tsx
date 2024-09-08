@@ -10,8 +10,8 @@ import Calendar, {
 import { JournalMarkdownType } from "@/types/MetadataType"
 
 export const DEFAULT_THEME = {
-  light: ["#ebedf0", "#9be9a8", "#40c463"],
-  dark: ["#161b22", "#0e4429", "#006d32"],
+  light: ["#ebedf0", "#f8d477", "#f5c13d"],
+  dark: ["#161b22", "#ddae37", "#f5c13d"],
 } satisfies ThemeInput
 
 const transformDataForCalendar = (
@@ -63,22 +63,19 @@ export default function AnnualActivityGraph({ entries }: CalendarProps) {
     return <Skeleton loading />
   } else {
     return (
-      <div>
-        <h1>Annual Activity Graph</h1>
-        <Calendar
-          data={entriesForCalendar}
-          // labels={Object.assign({}, defaultLabels, labels)}
-          // ref={ref}
-          theme={DEFAULT_THEME}
-          totalCount={totalCount}
-          labels={{
-            totalCount: "{{count}} journal entries in {{year}}",
-          }}
-          maxLevel={2}
-          // start the week on monday
-          weekStart={1}
-        />
-      </div>
+      <Calendar
+        data={entriesForCalendar}
+        // labels={Object.assign({}, defaultLabels, labels)}
+        // ref={ref}
+        theme={DEFAULT_THEME}
+        totalCount={totalCount}
+        labels={{
+          totalCount: "{{count}} journal entries in {{year}}",
+        }}
+        maxLevel={2}
+        // start the week on monday
+        weekStart={1}
+      />
     )
   }
 }
