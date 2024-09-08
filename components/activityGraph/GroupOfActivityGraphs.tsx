@@ -33,7 +33,7 @@ export default function GroupOfActivityGraphs({
     return null
   } else {
     return (
-      <div className="align-center flex flex-col">
+      <div className="flex flex-col items-center">
         {Array.from(sortedEntriesGroupedByYear.entries()).map(
           ([year, yearEntries]) => (
             <div className="mt-10" key={year}>
