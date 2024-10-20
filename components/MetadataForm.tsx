@@ -42,6 +42,19 @@ export const MetadataForm: React.FC = () => {
   const { toast } = useToast()
   const [journalNumber] = useLocalStorageState<number>("journalNumber")
 
+  const resetPrimaryMetadata = () => {
+    // reset state
+    reset({
+      title: "",
+      date: "",
+      time: "",
+      location: undefined,
+      page: null as any, // force react hook form to reset the value to undefined
+      tags: [],
+      content: "",
+    })
+  }
+
   const onSubmit: SubmitHandler<FormData> = async ({
     title,
     date,
@@ -51,7 +64,7 @@ export const MetadataForm: React.FC = () => {
     tags,
     content,
   }) => {
-    if (!journalNumber) {
+    if (journalNumber === undefined || journalNumber < 0) {
       toast({
         title: "Error",
         description:
@@ -90,17 +103,6 @@ ${title.includes("?") ? `Original title: ${title}\n\n` : ""}${
         title: "Success",
         description: "Metadata saved to file",
         variant: "success",
-      })
-
-      // reset state
-      reset({
-        title: "",
-        date: "",
-        time: "",
-        location: undefined,
-        page: null as any, // force react hook form to reset the value to undefined
-        tags: [],
-        content: "",
       })
       markdownRef.current?.setMarkdown("")
     } catch (error) {
@@ -214,6 +216,13 @@ ${title.includes("?") ? `Original title: ${title}\n\n` : ""}${
 
         <Button type="submit" className="mt-4 w-full">
           Save to file!
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={resetPrimaryMetadata}
+          className="mt-4 w-full"
+        >
+          Reset metadata
         </Button>
       </form>
     </>
